@@ -81,3 +81,36 @@ body.home {
         }
     }
 }
+body.login {
+  p, h1, input, label{
+    font-family: $paragrafen;
+    color: $wit;
+    background-color: $groen;
+  }
+  label , input {
+    padding: 0.3em;
+    border-radius: 3em;
+  }
+  main{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: center;
+    h1{
+      width: min-content;
+      align-self: center;
+    }
+    form{
+      width: 70vw;
+      display: flex;
+      justify-content:space-between;
+      align-self: center;
+    }
+  }
+  .logo{
+    height: 2em;
+  }
+  background-color: $grijs;
+
+  
+}

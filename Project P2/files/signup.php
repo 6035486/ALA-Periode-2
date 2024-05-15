@@ -106,9 +106,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </select>
             </section>
            
-            
-          
-
             <input class="backgroundgroen submitbtn" type="submit" value="Signup">
         </form>
     </main>
