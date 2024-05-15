@@ -1,7 +1,8 @@
 <?php 
 require_once('../helpers/helpers.php');
-$activeSeries = getActiveSeries($db); 
-$nonActiveSeries = getNonActiveSeries($db); 
+$activeSeries = getActiveSeries($db);
+$randomSerie = getRandomSerie($db) 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,20 +17,27 @@ $nonActiveSeries = getNonActiveSeries($db);
 <body class="home">
     <main>
         <nav>
-            
+        <?php foreach($randomSerie as $serie) { ?>
+            <h3><?php echo $serie['SerieTitel']; ?></h3>
+            <img src="../images/0000<?php echo $serie['SerieID']; ?>.jpg" alt="" >
+            <img src="../images/000<?php echo $serie['SerieID']; ?>.jpg" alt="">
+            <img src="../images/00<?php echo $serie['SerieID']; ?>.jpg" alt="">
+            <?php } ?>
+
         </nav>
+
     <section class="active-section">
-            <h2>Actieve Series</h2>
-            <div class="series-container">
-                <?php foreach($activeSeries as $index => $serie) { ?>
-                    <div class="serie" id="serie<?php echo $index; ?>" onclick="toggleSize(this)">
+            <h2>Aanbevolen</h2>
+            <article class="series-container">
+                <?php foreach($activeSeries as $serie) { ?>
+                    <article class="serie">
                          <img src="../images/0000<?php echo $serie['SerieID']; ?>.jpg" alt="" >
                          <img src="../images/000<?php echo $serie['SerieID']; ?>.jpg" alt="">
                          <img src="../images/00<?php echo $serie['SerieID']; ?>.jpg" alt="">
                          <h3><?php echo $serie['SerieTitel']; ?></h3>
-                    </div>
+                </article></a>
                 <?php } ?>
-            </div>
+                </article>
         </section>
         
     </main>

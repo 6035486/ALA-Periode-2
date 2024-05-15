@@ -14,7 +14,7 @@
 <body class="index">
     <nav>
 
-        <img src="./Logo/HOBO_logo.png" alt="logo">
+        <img src="./images/HOBO_logo.png" alt="logo">
         <article>
             <a href="./files/login.php">Login</a>
             <a href="./files/signup.php">Registreren</a>
