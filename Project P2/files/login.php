@@ -2,26 +2,14 @@
 require_once('../helpers/helpers.php');
 require_once('../connect/connect.php');
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    try {
-        $sql = "SELECT * FROM klant WHERE email = ?";
-        $stm = $db->prepare($sql);
-        $stm->execute([$_POST['email']]);
-        $selectedUser = $stm->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $th) {
-        echo $th;
+    $login = checkPassword($db, $_POST['email'],$_POST["password"]);
+    if($login == false){
+        $error = "invalid login credentials";
     }
-    
-    if(isset($selectedUser['password'])){
-        if (!password_verify($_POST['password'], $selectedUser['password'])) {
-            $error = "Password or email incorrect";
-        }
-        if (password_verify($_POST["password"], $selectedUser["password"])) {
-            $_SESSION["KlantNr"] = $selectedUser["KlantNr"];
-            header("location: ../index.php");
-            exit();
-        }
-    } else {
-        $error = "et";
+    else {
+        $_SESSION["KlantNr"] = $login;
+        header("location: ../index.php");
+        exit();
     }
 }
 ?>

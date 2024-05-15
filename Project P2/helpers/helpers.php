@@ -23,6 +23,15 @@ $stm = $db->prepare($sql);
 $stm->execute([$password]);
 $stm->fetch(PDO::FETCH_ASSOC);}
 
-function createAccount($db, $password, $email, $lastname, $fav_genre,){
-
+function checkPassword($db, $email, $password){
+    $sql = "SELECT * FROM klant WHERE email = ?";
+    $stm = $db->prepare($sql);
+    $stm->execute([$email]);
+    $selectedUser = $stm->fetch(PDO::FETCH_ASSOC);
+    if (password_verify($password, $selectedUser["password"])) {
+        return $selectedUser['KlantNr'];
+    }
+    else {
+        return false;
+    }
 }
