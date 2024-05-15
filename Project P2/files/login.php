@@ -1,22 +1,27 @@
 <?php
 require_once('../helpers/helpers.php');
+require_once('../connect/connect.php');
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-   
-    $sql = "SELECT * FROM klant WHERE Email = ?";
-    $stm = $db->prepare($sql);
-    $stm->execute([$_POST['email']]);
-    $selectedUser = $stm->fetch(PDO::FETCH_ASSOC);
-    if(isset($selectedUser['Email'])){
+    try {
+        $sql = "SELECT * FROM klant WHERE email = ?";
+        $stm = $db->prepare($sql);
+        $stm->execute([$_POST['email']]);
+        $selectedUser = $stm->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $th) {
+        echo $th;
+    }
+    
+    if(isset($selectedUser['password'])){
         if (!password_verify($_POST['password'], $selectedUser['password'])) {
             $error = "Password or email incorrect";
         }
         if (password_verify($_POST["password"], $selectedUser["password"])) {
             $_SESSION["KlantNr"] = $selectedUser["KlantNr"];
-            header("index.php");
+            header("location: ../index.php");
             exit();
         }
     } else {
-        $error = "Password or email incorrect";
+        $error = "et";
     }
 }
 ?>
@@ -37,13 +42,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <main>
             <h1>inloggen</h1>
             <form action="" method="post">
-                <label for="email"><p class="">email</p></label>    
                 <input class="" type="email" name="email" placeholder="email" id="" required>
-                <label for="password"><p class="">password</p></label>
                 <input class="" type="password" name="password" placeholder="password" id="" required>
-                <input class="" type="submit" value="Login">
+                <input class="submit" type="submit" value="Login">
             </form>
-            <p class="">
+            <p class="error">
                 <?php
                         if (isset($error)) {
                             echo $error;

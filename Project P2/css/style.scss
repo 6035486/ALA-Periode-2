@@ -82,29 +82,65 @@ body.home {
     }
 }
 body.login {
-  p, h1, input, label{
+    h1, input, label{
     font-family: $paragrafen;
     color: $wit;
     background-color: $groen;
   }
-  label , input {
-    padding: 0.3em;
-    border-radius: 3em;
-  }
+ 
   main{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-content: center;
+    p{
+      text-align: center;
+      align-self: center;
+      padding: 0.5em;
+      border-radius: 3em;
+      width: 10vw;
+      font-size: 1em;
+    }
+    .error{
+      color: $blauw;
+    }
     h1{
       width: min-content;
       align-self: center;
+      padding: 0.3em 0.5em;
+      border-radius: 3em;
     }
     form{
       width: 70vw;
       display: flex;
-      justify-content:space-between;
+      justify-content:space-evenly;
       align-self: center;
+      flex-direction: column;
+      
+      section{
+        display: flex;
+        justify-content: space-evenly;
+        p{
+          background-color: $groen;
+        }
+      }
+      input {
+        align-self: center;
+        margin-bottom: 1.5em;
+        padding: 0.5em;
+        border-radius: 3em;
+        width: 30vw;
+        font-size: 1em;
+        margin: 1em;
+      }
+      select {
+        background-color: $groen;
+        padding: 0.5em;
+        border-radius: 3em;
+        width: 30vw;
+        font-size: 1em;
+        margin: 1em;
+      }
     }
   }
   .logo{
