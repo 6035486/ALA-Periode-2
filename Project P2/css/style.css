@@ -42,23 +42,25 @@ h1 {
   text-decoration: none;
 }
 
-.series-container {
+.home main {
+  background-color: #444444;
+}
+.home main .active-section h2, .home main .non-active-section h2 {
+  margin-bottom: 10px;
+}
+.home main .active-section .series-container, .home main .non-active-section .series-container {
   display: flex;
   overflow-x: auto;
   white-space: nowrap;
+  margin-bottom: 20px;
 }
-.series-container .serie {
+.home main .active-section .series-container .serie, .home main .non-active-section .series-container .serie {
   flex: 0 0 auto;
   margin-right: 20px;
+  transition: width 0.5s ease;
 }
-.series-container .serie img {
-  max-width: 100px;
+.home main .active-section .series-container .serie img, .home main .non-active-section .series-container .serie img {
+  width: 200px;
+  max-width: 100%;
   height: auto;
-}
-
-body.home main .active-section h2, body.home main .non-active-section h2 {
-  margin-bottom: 10px;
-}
-body.home main .active-section .series-container, body.home main .non-active-section .series-container {
-  margin-bottom: 20px;
 }/*# sourceMappingURL=style.css.map */
