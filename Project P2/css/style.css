@@ -63,4 +63,44 @@ h1 {
   width: 200px;
   max-width: 100%;
   height: auto;
+}
+
+body.home main .active-section h2, body.home main .non-active-section h2 {
+  margin-bottom: 10px;
+}
+body.home main .active-section .series-container, body.home main .non-active-section .series-container {
+  margin-bottom: 20px;
+}
+
+body.login {
+  background-color: #444444;
+}
+body.login p, body.login h1, body.login input, body.login label {
+  font-family: "Montserrat", sans-serif;
+  color: #efefef;
+  background-color: #92d051;
+}
+body.login label, body.login input {
+  padding: 0.3em;
+  border-radius: 3em;
+}
+body.login main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: center;
+}
+body.login main h1 {
+  width: -moz-min-content;
+  width: min-content;
+  align-self: center;
+}
+body.login main form {
+  width: 70vw;
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+}
+body.login .logo {
+  height: 2em;
 }/*# sourceMappingURL=style.css.map */

@@ -26,24 +26,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title>
-        <link rel="stylesheet" href="styling/main.css">
-        <link rel="stylesheet" href="styling/login.css">
+        <link rel="stylesheet" href="../css/style.css">
+       
     </head>
-    <body>
+    <body class="login">
         <header>
-            <img class="logo" src="./img/HOBO_beeldmerk.png" alt="">
-            <a  class="grijs backgroundgroen" href="signup.php">Signup</a>
+            <img class="logo" src="../images/HOBO_beeldmerk.png" alt="">
+            <a  class="" href="signup.php">Signup</a>
         </header>
         <main>
-            <h1 class="groen">inloggen</h1>
+            <h1>inloggen</h1>
             <form action="" method="post">
-                <label for="email"><p class="groen">email</p></label>    
-                <input class="grijs input backgroundgroen" type="email" name="email" placeholder="email" id="" required>
-                <label for="password"><p class="groen">password</p></label>
-                <input class="grijs input backgroundgroen" type="password" name="password" placeholder="password" id="" required>
-                <input class="backgroundgroen submitbtn" type="submit" value="Login">
+                <label for="email"><p class="">email</p></label>    
+                <input class="" type="email" name="email" placeholder="email" id="" required>
+                <label for="password"><p class="">password</p></label>
+                <input class="" type="password" name="password" placeholder="password" id="" required>
+                <input class="" type="submit" value="Login">
             </form>
-            <p class="groen">
+            <p class="">
                 <?php
                         if (isset($error)) {
                             echo $error;
