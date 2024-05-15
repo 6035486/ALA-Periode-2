@@ -1,0 +1,83 @@
+@font-face {
+    font-family: "Neutra Text Alt";
+    src: url("./typografie/NeutraText-BoldAlt.otf") format("otl");
+}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+$blauw: #5b9bd5;
+$groen: #92d051;
+$grijs: #444444;
+$wit: #efefef;
+$paragrafen: "Montserrat", sans-serif; 
+$titels: "Neutra Text Alt", sans-serif;
+h1{
+    font-family: $titels;
+}
+// index.php //
+.index{
+    background-color: #222;
+    color: #fff;
+    font-family: "Fredericka the Great", serif;
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: background-image 1s;
+  
+  .hidden {
+    display: none;
+  }
+nav {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+  
+    img {
+      margin-right: auto; 
+      width: 10%;
+    }
+  
+    article {
+      display: flex; 
+      justify-content: flex-end; 
+  
+      a {
+        margin-left: 20px; 
+        color: $groen;
+        font-family: $paragrafen;
+        text-decoration: none;
+      }
+    }
+  }
+}
+// home.php //
+.series-container {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+
+    .serie {
+        flex: 0 0 auto;
+        margin-right: 20px;
+
+        img {
+            max-width: 100px;
+            height: auto;
+        }
+    }
+}
+
+body.home {
+    main {
+        .active-section, .non-active-section {
+            h2 {
+                margin-bottom: 10px;
+            }
+
+            .series-container {
+                margin-bottom: 20px;
+            }
+        }
+    }
+}

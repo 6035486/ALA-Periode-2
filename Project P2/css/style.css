@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+@font-face {
+  font-family: "Neutra Text Alt";
+  src: url("./typografie/NeutraText-BoldAlt.otf") format("otl");
+}
+h1 {
+  font-family: "Neutra Text Alt", sans-serif;
+}
+
+.index {
+  background-color: #222;
+  color: #fff;
+  font-family: "Fredericka the Great", serif;
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: background-image 1s;
+}
+.index .hidden {
+  display: none;
+}
+.index nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.index nav img {
+  margin-right: auto;
+  width: 10%;
+}
+.index nav article {
+  display: flex;
+  justify-content: flex-end;
+}
+.index nav article a {
+  margin-left: 20px;
+  color: #92d051;
+  font-family: "Montserrat", sans-serif;
+  text-decoration: none;
+}
+
+.series-container {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.series-container .serie {
+  flex: 0 0 auto;
+  margin-right: 20px;
+}
+.series-container .serie img {
+  max-width: 100px;
+  height: auto;
+}
+
+body.home main .active-section h2, body.home main .non-active-section h2 {
+  margin-bottom: 10px;
+}
+body.home main .active-section .series-container, body.home main .non-active-section .series-container {
+  margin-bottom: 20px;
+}/*# sourceMappingURL=style.css.map */
