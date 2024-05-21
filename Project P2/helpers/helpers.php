@@ -35,3 +35,27 @@ function checkPassword($db, $email, $password){
         return false;
     }
 }
+
+function search($db, $search){
+    $query = $db->prepare("SELECT * FROM serie WHERE SerieTitel = :search AND Actief = 1");
+    $query->execute(['search' => $search]);
+    $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    if (empty($results)) {
+        $searchLike = "%". $search ."%";
+        $query = $db->prepare("SELECT * FROM serie WHERE SerieTitel LIKE :search AND Actief = 1");
+        $query->execute(["search" => $searchLike]);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    if (empty($results)) {
+        $allResults = getActiveSeries($db);
+        $results = [];
+        foreach ($$allResults as $result) {
+            $distance = levenshtein($search, $result['SerieTitel']);
+            if($distance < 3) {
+                array_push($results, $result);
+            }
+        }
+    }
+    return $results;
+}
