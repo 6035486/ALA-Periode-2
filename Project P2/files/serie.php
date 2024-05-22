@@ -71,6 +71,37 @@ $serieInfo = getSerieInfo($db, $serieID);
             ?>
         </div>
     </main>
+    <footer class="footer">
+    <div class="footer__container">
+        <div class="footer__info">
+            <h3 class="footer__title">Bedrijfsnaam</h3>
+            <p>1234 Adresstraat,<br>Stad, Land</p>
+            <p>Telefoon: (123) 456-7890</p>
+            <p>Email: info@bedrijf.nl</p>
+        </div>
+
+        <div class="footer__links">
+            <h3 class="footer__title">Snelle Links</h3>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Over Ons</a></li>
+                <li><a href="#">Diensten</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="footer__social">
+            <h3 class="footer__title">Volg ons</h3>
+            <ul>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">LinkedIn</a></li>
+                <li><a href="#">Instagram</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
 
     <script>
         function navigateToSeason(select) {

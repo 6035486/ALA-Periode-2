@@ -15,30 +15,27 @@ $randomSeries = getRandomSeries($db);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../css/style.css">
+    <script src="../script/main.js">
+        
+    </script>
 </head>
 <body class="home">
-    <nav class="full-screen-nav">
-        <div class="nav-content">
-            <img src="../images/HOBO_logo.png" alt="" class="logo">
-            
-                <a href="#">Home</a>
-                <a href="#">Contact</a>
-                <a href="#">Logout</a>
-                <a href="#">Profile</a>
-            </div>
-        </div>
+<nav>
+        <img src="../images/HOBO_logo.png" alt="Logo">
+        <article>
+            <a href="./home.php">Home</a>
+            <a href="#">Contact</a>
+            <a href="#">Profile</a>
+            <a href="../index.php">Logout</a>
+        </article>
     </nav>
     <main class="homepage">
-        <section class="big-image">
-            <?php foreach($randomSerie as $serie) { ?>
-                <div class="big-image-content">
-                    <h3><?php echo $serie['SerieTitel']; ?></h3>
-                    <img src="../images/0000<?php echo $serie['SerieID']; ?>.jpg" alt="" class="nav-background">
-                    <img src="../images/000<?php echo $serie['SerieID']; ?>.jpg" alt="" class="nav-background">
-                    <img src="../images/00<?php echo $serie['SerieID']; ?>.jpg" alt="" class="nav-background">
-                </div>
-            <?php } ?>
-        </section>
+    <article>
+
+    <img class="hidden" alt="preloading" />
+
+
+        </article>
         <section class="active-section">
             <h2>Aanbevolen</h2>
             <div class="series-container">
@@ -67,6 +64,37 @@ $randomSeries = getRandomSeries($db);
             </div>
         </section>
     </main>
+    <footer class="footer">
+    <div class="footer__container">
+        <div class="footer__info">
+            <h3 class="footer__title">Bedrijfsnaam</h3>
+            <p>1234 Adresstraat,<br>Stad, Land</p>
+            <p>Telefoon: (123) 456-7890</p>
+            <p>Email: info@bedrijf.nl</p>
+        </div>
+
+        <div class="footer__links">
+            <h3 class="footer__title">Snelle Links</h3>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Over Ons</a></li>
+                <li><a href="#">Diensten</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="footer__social">
+            <h3 class="footer__title">Volg ons</h3>
+            <ul>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">LinkedIn</a></li>
+                <li><a href="#">Instagram</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
 </body>
 </html>
 

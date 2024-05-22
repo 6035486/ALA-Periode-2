@@ -18,7 +18,7 @@
         <article>
             <a href="./files/login.php">Login</a>
             <a href="./files/signup.php">Registreren</a>
-            <a href="./files/home.php">home</a>
+            
 
         </article>
     </nav>

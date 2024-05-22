@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
     } else {
-        $error = "Password or email incorrect";}
+        $error = "Password or email incorrect";}}
 require_once('../connect/connect.php');
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $login = checkPassword($db, $_POST['email'],$_POST["password"]);
