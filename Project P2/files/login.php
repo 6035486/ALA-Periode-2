@@ -1,24 +1,34 @@
 <?php
 require_once('../helpers/helpers.php');
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+session_start(); 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    $fixedPassword = "Wachtwoord";
+    
    
+    $hashedFixedPassword = password_hash($fixedPassword, PASSWORD_DEFAULT);
+
+    
     $sql = "SELECT * FROM klant WHERE Email = ?";
     $stm = $db->prepare($sql);
     $stm->execute([$_POST['email']]);
     $selectedUser = $stm->fetch(PDO::FETCH_ASSOC);
-    if(isset($selectedUser['Email'])){
-        if (!password_verify($_POST['password'], $selectedUser['password'])) {
+
+    if (isset($selectedUser['Email'])) {
+       
+        if (!password_verify($_POST['password'], $hashedFixedPassword)) {
             $error = "Password or email incorrect";
-        }
-        if (password_verify($_POST["password"], $selectedUser["password"])) {
+        } else {
+            
             $_SESSION["KlantNr"] = $selectedUser["KlantNr"];
-            header("index.php");
+            header("Location: home.php");
             exit();
         }
     } else {
         $error = "Password or email incorrect";
     }
 }
+
 ?>
 
 

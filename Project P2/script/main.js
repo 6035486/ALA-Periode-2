@@ -22,12 +22,4 @@ const images = [
         }, 7000)
       }
       
-      function toggleSize(element) {
-        if (element.style.width === "60%") {
-            element.style.width = "200px";
-        } else {
-            element.style.width = "60%";
-        }
-        element.style.height = "auto";
-        element.style.transition = "width 0.5s ease";
-    }
+      
