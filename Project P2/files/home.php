@@ -1,11 +1,18 @@
 <?php 
 session_start();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    // Redirect to login page
+    header('Location: login.php');
+    exit;
+}
 require_once('../helpers/helpers.php');
 
 $klantnummer = $_SESSION["KlantNr"];
 $series = getActiveSeries($db, $klantnummer);
 $randomSerie = getRandomSerie($db);
 $randomSeries = getRandomSeries($db);  
+$imageSrc = "../images/"
 
 ?>
 <!DOCTYPE html>
@@ -40,14 +47,31 @@ $randomSeries = getRandomSeries($db);
             <h2>Aanbevolen</h2>
             <div class="series-container">
                 <?php foreach($series as $serie) { ?>
-                    <div class="serie">
-                        <a href="./serie.php?id=<?php echo $serie['SerieID']; ?>">
-                            <img src="../images/0000<?php echo $serie['SerieID']; ?>.jpg" alt="" >
-                            <img src="../images/000<?php echo $serie['SerieID']; ?>.jpg" alt="" >
-                            <img src="../images/00<?php echo $serie['SerieID']; ?>.jpg" alt="" >
-                        </a>
-                    </div>
+                    <a href="#">
+                        <img src="<?php switch (strlen($serie["SerieID"])) {
+                            case 1:
+                                echo $imageSrc . "0000" . $serie["SerieID"] . ".jpg";
+                                break;
+                            
+                            case 2:
+                                echo $imageSrc . "000" . $serie["SerieID"] . ".jpg";
+                                break;
+                            
+                            case 3:
+                                echo $imageSrc . "00" . $serie["SerieID"] . ".jpg";
+                                break;
+                            case 4:
+                                echo $imageSrc . "0" . $serie["SerieID"] . ".jpg";
+                                break;
+                            
+                            default:
+                                # code...
+                                break;
+                        } ?>" alt="" srcset="">
+                       
+                        </a> 
                 <?php } ?>
+                
             </div>
         </section>
         <section class="active-section">
