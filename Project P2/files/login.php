@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+    header('Location: home.php');
+    exit;
+}
+
 require_once('../helpers/helpers.php');
 require_once('../connect/connect.php');
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -7,8 +14,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $error = "invalid login credentials";
     }
     else {
-        $_SESSION["KlantNr"] = $login;
-        header("location: ../index.php");
+        $_SESSION["email"] = $_POST["email"];
+        $_SESSION['loggedin'] = true;
+        $_SESSION['user_id'] = $user['id'];
+        header("location: home.php");
         exit();
     }
 }

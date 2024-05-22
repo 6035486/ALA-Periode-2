@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: login.php');
+    exit;
+}
 require_once('../helpers/helpers.php');
 if (isset($_POST["query"])) {
     $results = search($db, $_POST["query"]);
@@ -15,16 +21,20 @@ $imageSrc = "../images/"
 </head>
 <body class="search">
     <header>
+        <img class="logo" src="../images/HOBO_beeldmerk.png" alt="">
+        
         <form method="post">
             <input type="text" name="query" id="">
-            <input type="submit" value="submit">
+            <input type="submit" value="search">
         </form>
+        <a class="" href="home.php">Home</a>
     </header>
     <main>
+        <section>
         <?php if (isset($results)) {
              foreach($results as $result) { 
                 if ($result["Actief"] == "1") {
-                    ?> <div>
+                    ?> <a href="#">
                         <img src="<?php switch (strlen($result["SerieID"])) {
                             case 1:
                                 echo $imageSrc . "0000" . $result["SerieID"] . ".jpg";
@@ -45,10 +55,11 @@ $imageSrc = "../images/"
                                 # code...
                                 break;
                         } ?>" alt="" srcset="">
-                    </div> <?php
-                } else {
+                        <p class="serietitel"><?php echo $result["SerieTitel"]; ?></p>
+                        </a> <?php
                 }
               }}?>
+        </section>
     </main>
 </body>
 </html>

@@ -150,3 +150,53 @@ body.login {
 
   
 }
+body.search {
+  p {
+    font-family: $paragrafen;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    a {
+      font-family: $titels;
+      color: $groen;
+      text-decoration: none;
+    }
+    form {
+      input {
+        background-color: $groen;
+        color: $grijs;
+        font-family: $paragrafen;
+        font-size: 1em;
+        border: none;
+      }
+    }
+  }
+  main {
+    section{
+      padding-left: 12.5vw;
+      display: flex;
+      width: 75vw;
+      flex-wrap: wrap;
+      justify-content: start;
+      img {
+        width: 15vw;
+        padding-left: 5vw;
+      }
+      a {
+        width: 25vw;
+        text-decoration: none;
+      }
+      .serietitel{
+        text-align: center;
+        color: $groen;
+      }
+    }
+  }
+  .logo{
+    height: 2em;
+  }
+  background-color: $grijs;
+
+}

@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+    header('Location: home.php');
+    exit;
+}
 require_once('../helpers/helpers.php');
 require_once('../connect/connect.php');
 $errors = [];
@@ -26,6 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             values (?,?,?,?,?, 1);';
             $stm = $db->prepare($sql);
             $stm->execute([$_POST['firstname'],$_POST['lastname'], $_POST["email"], $password, $_POST["fav_genre"]]);
+            $_SESSION["KlantNr"] = $login;
+            $_SESSION['loggedin'] = true;
+            $_SESSION['user_id'] = $user['id'];
+            header("location: home.php");
         }
 
     }
