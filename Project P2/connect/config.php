@@ -1,6 +1,5 @@
 <?php
 $dbUser = "root";
-$dbPassword = "Hoefblad89";
+$dbPassword = "Joep321";
 $dbHost = "localhost:3307";
-$dbName = "hobo2022";
-?>
+$dbName = "hobo";

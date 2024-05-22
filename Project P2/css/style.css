@@ -128,4 +128,50 @@ body.login main form select {
 }
 body.login .logo {
   height: 2em;
+}
+
+body.search {
+  background-color: #444444;
+}
+body.search p {
+  font-family: "Montserrat", sans-serif;
+}
+body.search header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+body.search header a {
+  font-family: "Neutra Text Alt", sans-serif;
+  color: #92d051;
+  text-decoration: none;
+}
+body.search header form input {
+  background-color: #92d051;
+  color: #444444;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1em;
+  border: none;
+}
+body.search main section {
+  padding-left: 12.5vw;
+  display: flex;
+  width: 75vw;
+  flex-wrap: wrap;
+  justify-content: start;
+}
+body.search main section img {
+  width: 15vw;
+  padding-left: 5vw;
+}
+body.search main section a {
+  width: 25vw;
+  text-decoration: none;
+}
+body.search main section .serietitel {
+  text-align: center;
+  color: #92d051;
+}
+body.search .logo {
+  height: 2em;
 }/*# sourceMappingURL=style.css.map */
