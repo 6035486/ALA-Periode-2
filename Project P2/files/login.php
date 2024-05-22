@@ -25,13 +25,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
     } else {
-        $error = "Password or email incorrect";
+        $error = "Password or email incorrect";}
+require_once('../connect/connect.php');
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $login = checkPassword($db, $_POST['email'],$_POST["password"]);
+    if($login == false){
+        $error = "invalid login credentials";
+    }
+    else {
+        $_SESSION["KlantNr"] = $login;
+        header("location: ../index.php");
+        exit();
     }
 }
 
 ?>
 
-
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,13 +58,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <main>
             <h1>inloggen</h1>
             <form action="" method="post">
-                <label for="email"><p class="">email</p></label>    
                 <input class="" type="email" name="email" placeholder="email" id="" required>
-                <label for="password"><p class="">password</p></label>
                 <input class="" type="password" name="password" placeholder="password" id="" required>
-                <input class="" type="submit" value="Login">
+                <input class="submit" type="submit" value="Login">
             </form>
-            <p class="">
+            <p class="error">
                 <?php
                         if (isset($error)) {
                             echo $error;
@@ -62,5 +71,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </p>
         </main>
     </body>
-
 </html>

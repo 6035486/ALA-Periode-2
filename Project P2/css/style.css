@@ -74,19 +74,8 @@ nav article a {
   background: #444444;
 }
 
-.big-image {
-  position: relative;
-  width: 100vw;
-  height: 90vh;
-  overflow: hidden;
-}
-.big-image .big-image-content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.hidden {
+  display: none;
 }
 
 .active-section {
@@ -102,7 +91,7 @@ nav article a {
   gap: 10px;
 }
 .active-section .series-container .serie {
-  width: 200px;
+  width: 300px;
   position: relative;
 }
 .active-section .series-container .serie img {
@@ -163,4 +152,114 @@ nav article a {
 }
 .info .seasons .season ul div {
   margin: 1%;
+}
+
+body.home main .active-section h2, body.home main .non-active-section h2 {
+  margin-bottom: 10px;
+}
+body.home main .active-section .series-container, body.home main .non-active-section .series-container {
+  margin-bottom: 20px;
+}
+
+body.login {
+  background-color: #444444;
+}
+body.login h1, body.login input, body.login label {
+  font-family: "Montserrat", sans-serif;
+  color: #efefef;
+  background-color: #92d051;
+}
+body.login main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: center;
+}
+body.login main p {
+  text-align: center;
+  align-self: center;
+  padding: 0.5em;
+  border-radius: 3em;
+  width: 10vw;
+  font-size: 1em;
+}
+body.login main .error {
+  color: #5b9bd5;
+}
+body.login main h1 {
+  width: -moz-min-content;
+  width: min-content;
+  align-self: center;
+  padding: 0.3em 0.5em;
+  border-radius: 3em;
+}
+body.login main form {
+  width: 70vw;
+  display: flex;
+  justify-content: space-evenly;
+  align-self: center;
+  flex-direction: column;
+}
+body.login main form section {
+  display: flex;
+  justify-content: space-evenly;
+}
+body.login main form section p {
+  background-color: #92d051;
+}
+body.login main form input {
+  align-self: center;
+  margin-bottom: 1.5em;
+  padding: 0.5em;
+  border-radius: 3em;
+  width: 30vw;
+  font-size: 1em;
+  margin: 1em;
+}
+body.login main form select {
+  background-color: #92d051;
+  padding: 0.5em;
+  border-radius: 3em;
+  width: 30vw;
+  font-size: 1em;
+  margin: 1em;
+}
+body.login .logo {
+  height: 2em;
+}
+
+.footer {
+  background-color: #92d051;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+}
+.footer__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.footer__info, .footer__links, .footer__social {
+  flex: 1 1 300px;
+  padding: 20px;
+}
+.footer__title {
+  margin-bottom: 10px;
+}
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+.footer ul li {
+  margin: 5px 0;
+}
+.footer ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+.footer ul li a:hover {
+  text-decoration: underline;
 }/*# sourceMappingURL=style.css.map */

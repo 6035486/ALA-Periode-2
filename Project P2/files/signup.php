@@ -1,5 +1,6 @@
 <?php
 require_once('../helpers/helpers.php');
+require_once('../connect/connect.php');
 $errors = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -36,77 +37,75 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
-    <link rel="stylesheet" href="styling/main.css">
-    <link rel="stylesheet" href="styling/login.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="login">
     <header>
-        <img class="logo" src="./img/HOBO_beeldmerk.png" alt="">
-        <a class="grijs backgroundgroen" href="login.php">Login</a>
+            <img class="logo" src="../images/HOBO_beeldmerk.png" alt="">
+        <a class="gr" href="login.php">Login</a>
     </header>
     <main>
         <form action="" method="post">
             <section>
-            <label for="firstname"><p class="groen">First name</p></label>    
-            <input class="grijs input backgroundgroen" type="text" name="firstname" placeholder="first name" id="" required>
+            <p>First name</p>
+            <input class="" type="text" name="firstname" placeholder="first name" id="" required>
            
             </section>
             <section>
-            <label for="tussenvoegsel"><p class="groen">Tussenvoegsel</p></label>    
-            <input class="grijs input backgroundgroen" type="text" name="tussenvoegsel" placeholder="tussenvoegsel" id="">
+            <p>Tussenvoegsel</p>
+            <input class="" type="text" name="tussenvoegsel" placeholder="tussenvoegsel" id="">
             </section>
             <section>
-            <label for="lastname"><p class="groen">Last name</p></label>    
-            <input class="grijs input backgroundgroen" type="text" name="lastname" placeholder="last name" id="" required>
+            <p>Last name</p>   
+            <input class="" type="text" name="lastname" placeholder="last name" id="" required>
             </section>
             <section>
-            <label for="email"><p class="groen">email</p></label>    
-            <input class="grijs input backgroundgroen" type="email" name="email" placeholder="email" id="" required>
+           <p>email</p>
+            <input class="" type="email" name="email" placeholder="email" id="" required>
             </section>
             <section>
-            <label for="confirm_email"><p class="groen">confirm email</p></label>    
-            <input class="grijs input backgroundgroen" type="email" name="confirm_email" placeholder="confirm email" id="" required>
+            <p>confirm email</p>
+            <input class="" type="email" name="confirm_email" placeholder="confirm email" id="" required>
             </section>
             <?php 
             if (isset($errors['email'])) {
-                echo "<p class='blauw'>".$errors["email"] ."</p>";
+                echo "<p class=''>".$errors["email"] ."</p>";
             } 
             ?>
             <section>
-            <label for="password"><p class="groen">password</p></label>
-            <input class="grijs input backgroundgroen" type="password" name="password" placeholder="password" id="" required>
+            <p>password</p>
+            <input class="" type="password" name="password" placeholder="password" id="" required>
             </section>
             <?php 
             if (isset($errors['password'])) {
-                echo "<p class='blauw'>".$errors["password"] ."</p>";
+                echo "<p class=''>".$errors["password"] ."</p>";
             } 
             ?>
             <section>
-            <label for="confirm_password"><p class="groen">confirm password</p></label>
-            <input class="grijs input backgroundgroen" type="password" name="confirm_password" placeholder="confirm password" id="" required>
+            <p>confirm password</p>
+            <input class="n" type="password" name="confirm_password" placeholder="confirm password" id="" required>
             </section>
             <?php 
             if (isset($errors['confirm_password'])) {
-                echo "<p class='blauw'>".$errors["confirm_password"] ."</p>";
+                echo "<p class=''>".$errors["confirm_password"] ."</p>";
             } 
             ?>
             <section>
-            <label for="tussenvoegsel"><p class="groen">Favorite Genre</p></label>
-            <select name="fav_genre" class="groen backgroundgrijs" id="" required>
+            <p>Favorite Genre</p>
+            <select name="fav_genre" class="" id="" required>
                 <?php
-                include_once('database_connect.php');
                 $sql = "SELECT GenreNaam FROM genre";
                 $stm = $db->prepare($sql);
                 $stm->execute();    
                 $result = $stm->fetchAll();
                 foreach ($result as $row) {
-                    echo "<option class='groen' value='".$row["GenreNaam"]."'>".$row["GenreNaam"]."</option>";
+                    echo "<option class='' value='".$row["GenreNaam"]."'>".$row["GenreNaam"]."</option>";
                 }
                 ?>
             </select>
             </section>
            
-            <input class="backgroundgroen submitbtn" type="submit" value="Signup">
+            <input class="" type="submit" value="Signup">
         </form>
     </main>
 </body>

@@ -64,4 +64,40 @@ function genres($db){
 function createAccount($db, $password, $email, $lastname, $fav_genre,){
 
 }
-?>
+
+function checkPassword($db, $email, $password){
+    $sql = "SELECT * FROM klant WHERE email = ?";
+    $stm = $db->prepare($sql);
+    $stm->execute([$email]);
+    $selectedUser = $stm->fetch(PDO::FETCH_ASSOC);
+    if (password_verify($password, $selectedUser["password"])) {
+        return $selectedUser['KlantNr'];
+    }
+    else {
+        return false;
+    }
+}
+
+function search($db, $search){
+    $query = $db->prepare("SELECT * FROM serie WHERE SerieTitel = :search AND Actief = 1");
+    $query->execute(['search' => $search]);
+    $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    if (empty($results)) {
+        $searchLike = "%". $search ."%";
+        $query = $db->prepare("SELECT * FROM serie WHERE SerieTitel LIKE :search AND Actief = 1");
+        $query->execute(["search" => $searchLike]);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    if (empty($results)) {
+        $allResults = getActiveSeries($db);
+        $results = [];
+        foreach ($$allResults as $result) {
+            $distance = levenshtein($search, $result['SerieTitel']);
+            if($distance < 3) {
+                array_push($results, $result);
+            }
+        }
+    }
+    return $results;
+}
