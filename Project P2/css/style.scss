@@ -1,71 +1,193 @@
 @font-face {
-    font-family: "Neutra Text Alt";
-    src: url("./typografie/NeutraText-BoldAlt.otf") format("otl");
+  font-family: "Neutra Text Alt";
+  src: url("./typografie/NeutraText-BoldAlt.otf") format("otl");
 }
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
 $blauw: #5b9bd5;
 $groen: #92d051;
 $grijs: #444444;
 $wit: #efefef;
 $paragrafen: "Montserrat", sans-serif; 
 $titels: "Neutra Text Alt", sans-serif;
-h1{
-    font-family: $titels;
+
+h1 {
+  font-family: $titels;
 }
-// index.php //
-.index{
-    background-color: #222;
-    color: #fff;
-    font-family: "Fredericka the Great", serif;
-    padding: 0;
-    margin: 0;
-    height: 100vh;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    transition: background-image 1s;
-  
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: $grijs;
+}
+
+.index, .home, .serie {
+  background-color: $grijs;
+  color: $wit;
+  font-family: $paragrafen;
+  padding: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+
+  img {
+    width: 10%;
+  }
+
+  article {
+    display: flex;
+    justify-content: flex-end;
+
+    a {
+      margin-left: 20px;
+      color: $groen;
+      text-decoration: none;
+      font-family: $paragrafen;
+    }
+  }
+}
+
+.index {
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: background-image 1s;
+
   .hidden {
     display: none;
   }
-nav {
+}
+
+.full-screen-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+
+  .nav-content {
     display: flex;
-    justify-content: space-between; 
     align-items: center;
-  
-    img {
-      margin-right: auto; 
+
+    .logo {
       width: 10%;
     }
-  
-    article {
-      display: flex; 
-      justify-content: flex-end; 
-  
-      a {
-        margin-left: 20px; 
-        color: $groen;
-        font-family: $paragrafen;
-        text-decoration: none;
-      }
+
+    .nav-links {
+      margin-left: auto;
+      color: $groen;
     }
   }
 }
 // home.php //
-.series-container {
+.homepage {
+  padding: 20px;
+  background: $grijs;
+}
+
+.hidden {
+  display: none;
+}
+
+
+.active-section {
+  margin-bottom: 20px;
+
+  h2 {
+    margin-bottom: 10px;
+    font-family: $titels;
+    color: $wit;
+  }
+
+  .series-container {
     display: flex;
-    overflow-x: auto;
-    white-space: nowrap;
+    gap: 10px;
 
     .serie {
-        flex: 0 0 auto;
-        margin-right: 20px;
+      width: 300px;
+      position: relative;
 
-        img {
-            max-width: 100px;
-            height: auto;
-        }
+      img {
+        width: 100%;
+        height: auto;
+      }
     }
+  }
+}
+// serie.php //
+.info {
+  .series-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 20px;
+
+    .info-text {
+      flex: 1;
+
+      h2 {
+        color: $groen;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+      }
+
+      p {
+        margin: 5px 0;
+      }
+    }
+
+    .series-image {
+      width: 300px;
+      height: 450px;
+      object-fit: cover;
+    }
+  }
+
+  .seasons {
+    .dropdown {
+      margin-bottom: 20px;
+
+      select {
+        padding: 10px;
+        font-size: 1em;
+        border: none;
+        border-radius: 5px;
+      }
+    }
+
+    .season {
+      margin-bottom: 20px;
+      display: none;
+      
+
+      h3 {
+        color: $groen;
+        font-size: 2em;
+        margin-bottom: 10px;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        
+        li {
+          padding: 10px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        div {
+          margin: 1%;
+        }
+      }
+    }
+  }
 }
 
 body.home {
@@ -150,6 +272,49 @@ body.login {
 
   
 }
+.footer {
+  background-color: $groen;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  font-family: $paragrafen;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  &__info,
+  &__links,
+  &__social {
+    flex: 1 1 300px;
+    padding: 20px;
+  }
+
+  &__title {
+    margin-bottom: 10px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin: 5px 0;
+
+      a {
+        color: #fff;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }}
 body.search {
   p {
     font-family: $paragrafen;

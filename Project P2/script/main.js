@@ -1,7 +1,7 @@
 const images = [
-        "./images/00001.jpg",
-        "./images/00002.jpg",
-        "./images/00003.jpg"
+        "./images/gentlemen.jpg",
+        "./images/crown.jpg",
+        "./images/witcher.jpg"
    
     ]
     
@@ -21,4 +21,5 @@ const images = [
           }
         }, 7000)
       }
+      
       
