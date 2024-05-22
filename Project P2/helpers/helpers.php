@@ -43,7 +43,7 @@ function checkPassword($db, $email, $password)
 function search($db, $search)
 {
     $searchLike = "%".$search."%";
-    $query = $db->prepare("SELECT * FROM serie WHERE SerieTitel LIKE :search LIMIT 10");
+    $query = $db->prepare("SELECT * FROM serie WHERE Actief = 1 AND SerieTitel LIKE :search LIMIT 50");
     $query->execute(["search" => $searchLike]);
     $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
