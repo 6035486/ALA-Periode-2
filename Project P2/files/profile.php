@@ -7,7 +7,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-$klantnummer = $_SESSION["KlantNr"];
+$klantnummer = $_SESSION['KlantNr'];
 
 function profile($db, $klantnummer){
     $sql = "SELECT * FROM klant WHERE KlantNr = :klantnummer";
@@ -27,6 +27,7 @@ $profileData = profile($db, $klantnummer);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 <nav>

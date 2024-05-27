@@ -6,7 +6,6 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     exit;
 }
 require_once('../helpers/helpers.php');
-session_start(); 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     login($db);}
 
