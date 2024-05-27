@@ -26,6 +26,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             values (?,?,?,?,?,?,1);';
             $stm = $db->prepare($sql);
             $stm->execute([$_POST['firstname'], $_POST["tussenvoegsel"],$_POST['lastname'], $_POST["email"], $password, $_POST["fav_genre"]]);
+            $_SESSION["KlantNr"] = $login;
+            $_SESSION['loggedin'] = true;
+            $_SESSION['user_id'] = $user['id'];
+            header("location: home.php");
         }
         else {
             $sql = 'INSERT INTO klant (Voornaam, Achternaam, Email, password, Genre, AboID)

@@ -7,7 +7,6 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 }
 
 require_once('../helpers/helpers.php');
-session_start(); 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $fixedPassword = "Wachtwoord";
@@ -32,20 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
     } else {
-        $error = "Password or email incorrect";}}
-require_once('../connect/connect.php');
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $login = checkPassword($db, $_POST['email'],$_POST["password"]);
-    if($login == false){
-        $error = "invalid login credentials";
-    }
-    else {
-        $_SESSION["email"] = $_POST["email"];
-        $_SESSION['loggedin'] = true;
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['KlantNr'] = $user['KlantNr'];
-        header("location: home.php");
-        exit();
+        $error = "Password or email incorrect";
     }
 }
 
