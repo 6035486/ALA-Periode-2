@@ -19,6 +19,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $_SESSION["email"] = $_POST["email"];
         $_SESSION['loggedin'] = true;
         $_SESSION['user_id'] = $user['id'];
+        $_SESSION['KlantNr'] = $user['KlantNr'];
         header("location: home.php");
         exit();
     }

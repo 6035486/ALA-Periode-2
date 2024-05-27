@@ -87,6 +87,30 @@ function search($db, $search)
     usort($results, fn($a, $b) => levenshtein($search, $a["SerieTitel"])<=> levenshtein($search, $b["SerieTitel"]));
    
     return $results;
+
+}
+function adminSearch($db, $search)
+{
+    $searchLike = "%".$search."%";
+    $query = $db->prepare("SELECT * FROM serie WHERE SerieTitel LIKE :search LIMIT 1000");
+    $query->execute(["search" => $searchLike]);
+    $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    usort($results, fn($a, $b) => levenshtein($search, $a["SerieTitel"])<=> levenshtein($search, $b["SerieTitel"]));
+   
+    return $results;
+}
+
+function admminLogin($db, $user, $password) {
+    $sql = "SELECT * FROM users WHERE username = :username";
+    $stm = $db->prepare($sql);
+    $stm->execute(["username" => $user]);
+    $selectedUser = $stm->fetch(PDO::FETCH_ASSOC);
+    if (password_verify($password, $selectedUser["password"])) {
+        return $selectedUser;
+    } else {
+        return false;
+    }
 }
 function login($db){
     

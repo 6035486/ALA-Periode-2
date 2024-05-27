@@ -245,6 +245,52 @@ body.login .logo {
   height: 2em;
 }
 
+<<<<<<< HEAD
+body.search {
+  background-color: #444444;
+}
+body.search p {
+  font-family: "Montserrat", sans-serif;
+}
+body.search header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+body.search header a {
+  font-family: "Neutra Text Alt", sans-serif;
+  color: #92d051;
+  text-decoration: none;
+}
+body.search header form input {
+  background-color: #92d051;
+  color: #444444;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1em;
+  border: none;
+}
+body.search main section {
+  padding-left: 12.5vw;
+  display: flex;
+  width: 75vw;
+  flex-wrap: wrap;
+  justify-content: start;
+}
+body.search main section img {
+  width: 15vw;
+  padding-left: 5vw;
+}
+body.search main section a {
+  width: 25vw;
+  text-decoration: none;
+}
+body.search main section .serietitel {
+  text-align: center;
+  color: #92d051;
+}
+body.search .logo {
+  height: 2em;
+=======
 .footer {
   background-color: #92d051;
   color: #fff;
@@ -279,6 +325,7 @@ body.login .logo {
 }
 .footer ul li a:hover {
   text-decoration: underline;
+<<<<<<< HEAD
 }
 
 body.search {
@@ -325,4 +372,7 @@ body.search main section .serietitel {
 }
 body.search .logo {
   height: 2em;
+=======
+>>>>>>> fcb6a0ed13aa9ba348ba0a55c48b52c79e071fbb
+>>>>>>> 969b8de5a8d5993ddfb47906ffc6af78d3b61b27
 }/*# sourceMappingURL=style.css.map */
