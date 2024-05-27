@@ -1,39 +1,15 @@
 <?php
-session_start();
+
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     header('Location: home.php');
     exit;
 }
-
 require_once('../helpers/helpers.php');
 session_start(); 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    $fixedPassword = "Wachtwoord";
-    
-   
-    $hashedFixedPassword = password_hash($fixedPassword, PASSWORD_DEFAULT);
+    login($db);}
 
-    
-    $sql = "SELECT * FROM klant WHERE Email = ?";
-    $stm = $db->prepare($sql);
-    $stm->execute([$_POST['email']]);
-    $selectedUser = $stm->fetch(PDO::FETCH_ASSOC);
-
-    if (isset($selectedUser['Email'])) {
-       
-        if (!password_verify($_POST['password'], $hashedFixedPassword)) {
-            $error = "Password or email incorrect";
-        } else {
-            
-            $_SESSION["KlantNr"] = $selectedUser["KlantNr"];
-            header("Location: home.php");
-            exit();
-        }
-    } else {
-        $error = "Password or email incorrect";}}
-require_once('../connect/connect.php');
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $login = checkPassword($db, $_POST['email'],$_POST["password"]);
     if($login == false){

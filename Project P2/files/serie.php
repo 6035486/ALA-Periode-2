@@ -3,6 +3,7 @@ require_once('../helpers/helpers.php');
 
 $serieID = $_GET['id'];
 $serieInfo = getSerieInfo($db, $serieID);
+$imageSrc = "../images/"
 ?>
 
 <!DOCTYPE html>
@@ -30,9 +31,26 @@ $serieInfo = getSerieInfo($db, $serieID);
                 <h2><?php echo $serieInfo[0]['SerieTitel']; ?></h2>
                 <p>Rating: <?php echo $serieInfo[0]['IMDBRating']; ?></p>
             </div>
-            <img src="../images/0000<?php echo $serieInfo[0]['SerieID']; ?>.jpg" alt="" class="series-image">
-            <img src="../images/000<?php echo $serieInfo[0]['SerieID']; ?>.jpg" alt="" class="series-image">
-            <img src="../images/00<?php echo $serieInfo[0]['SerieID']; ?>.jpg" alt="" class="series-image">
+            <img src="<?php switch (strlen($serieInfo[0]['SerieID'])) {
+                            case 1:
+                                echo $imageSrc . "0000" . $serieInfo[0]['SerieID'] . ".jpg";
+                                break;
+                            
+                            case 2:
+                                echo $imageSrc . "000" . $serieInfo[0]['SerieID'] . ".jpg";
+                                break;
+                            
+                            case 3:
+                                echo $imageSrc . "00" .$serieInfo[0]['SerieID'] . ".jpg";
+                                break;
+                            case 4:
+                                echo $imageSrc . "0" . $serieInfo[0]['SerieID'] . ".jpg";
+                                break;
+                            
+                            default:
+                                
+                                break;
+                        } ?>" alt="" srcset="">
         </div>
 
         <div class="seasons">
@@ -44,7 +62,7 @@ $serieInfo = getSerieInfo($db, $serieID);
                     foreach ($serieInfo as $info) {
                         if (!in_array($info['SeizoenID'], $seasons)) {
                             $seasons[] = $info['SeizoenID']; ?>
-                            <option value="season-<?php echo $info['SeizoenID']; ?>">Season <?php echo $info['SeizoenID']; ?></option>
+                            <option value="season-<?php echo $info['Rang']; ?>">Season <?php echo $info['Rang']; ?></option>
                         <?php }
                     }
                     ?>
