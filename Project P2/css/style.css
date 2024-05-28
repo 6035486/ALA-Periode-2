@@ -69,6 +69,60 @@ nav article a {
   color: #92d051;
 }
 
+.bg-img {
+  background-image: "../images/witcher.jpg";
+  min-height: 380px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+.bg-img .container {
+  position: absolute;
+  margin: 20px;
+  width: auto;
+}
+
+.carousel-view {
+  display: flex;
+  align-items: center;
+}
+
+.prev-btn,
+.next-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-size: xx-large;
+  color: #92d051;
+  margin: 0 10px;
+}
+
+.item-list {
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.item-list img {
+  width: 150px;
+  padding: 1%;
+}
+
+.item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  margin-right: 1px;
+  width: 10;
+  height: auto;
+}
+
+.item-list::-webkit-scrollbar {
+  display: none;
+}
+
 .homepage {
   padding: 20px;
   background: #444444;
@@ -325,4 +379,64 @@ body.search main section .serietitel {
 }
 body.search .logo {
   height: 2em;
+}
+
+.profile {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+}
+.profile__title {
+  text-align: center;
+  color: #92d051;
+  font-family: "Neutra Text Alt", sans-serif;
+}
+.profile__details {
+  margin: 20px 0;
+}
+.profile__details p {
+  color: #92d051;
+  font-family: "Montserrat", sans-serif;
+}
+.profile__details__item {
+  margin-bottom: 10px;
+}
+.profile__edit-button, .profile__save-button, .profile__cancel-button {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.profile__edit-button {
+  background-color: #92d051;
+  color: white;
+}
+.profile__save-button {
+  background-color: #444444;
+  color: white;
+}
+.profile__cancel-button {
+  background-color: #e74c3c;
+  color: white;
+}
+.profile__edit-form {
+  display: none;
+  margin-top: 20px;
+}
+.profile__edit-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #92d051;
+  font-family: "Neutra Text Alt", sans-serif;
+}
+.profile__edit-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #92d051;
+  font-family: "Montserrat", sans-serif;
 }/*# sourceMappingURL=style.css.map */

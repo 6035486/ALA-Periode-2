@@ -5,11 +5,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: login.php');
     exit;
 }
+
 require_once('../helpers/helpers.php');
 
-$klantnummer = $_SESSION["KlantNr"];
-$series = getActiveSeries($db, $klantnummer);
-$randomSerie = getRandomSerie($db);
+$email = $_SESSION['email'];
+$series = getActiveSeries($db, $email);
+
 $randomSeries = getRandomSeries($db);  
 $imageSrc = "../images/"
 
@@ -27,65 +28,58 @@ $imageSrc = "../images/"
 </head>
 <body class="home"> 
 <nav>
+    <div class="bg-img">
+    <div class="container">
+    <div class="topnav">
         <img src="../images/HOBO_logo.png" alt="Logo">
         <article>  
             <a href="./home.php">Home</a>
             <a href="#">Contact</a>
             <a href="./profile.php">Profile</a>
             <a href="./uitlog.php">Logout</a>
-        </article>
+        </article></div></div></div>
     </nav>       
 
-    <div id="slideshow-container">
-        <img id="slideshow" src="../images/gentlemen.jpg" alt="Slideshow Image">
-        <img class="hidden" src="../images/crown.jpg" alt="Preload Image">
-    </div>
-    <main class="homepage">
     
-        <section class="active-section">
-            <h2>Aanbevolen</h2>
-            <div class="series-container">
+    <main class="homepage">
+       
+    
+    <section class="active-section">
+    <h2>Aanbevolen</h2>
+    <div class="container">
+        <div class="carousel-view">
+            <button id="prev-btn" class="prev-btn">&#129084;</button>
+            <div id="item-list" class="item-list">
                 <?php foreach($series as $serie) { ?>
-                    <a href="#">
-                        <img src="<?php switch (strlen($serie["SerieID"])) {
-                            case 1:
-                                echo $imageSrc . "0000" . $serie["SerieID"] . ".jpg";
-                                break;
-                            
-                            case 2:
-                                echo $imageSrc . "000" . $serie["SerieID"] . ".jpg";
-                                break;
-                            
-                            case 3:
-                                echo $imageSrc . "00" . $serie["SerieID"] . ".jpg";
-                                break;
-                            case 4:
-                                echo $imageSrc . "0" . $serie["SerieID"] . ".jpg";
-                                break;
-                            
-                            default:
-                                
-                                break;
-                        } ?>" alt="" srcset="">
-                       
-                        </a> 
-                <?php } ?>
-                
-            </div>
-        </section>
-        <section class="active-section">
-            <h2>Popular</h2>
-            <div class="series-container">
-                <?php foreach($randomSeries as $serie) { ?>
-                    <div class="serie">
                     <a href="./serie.php?id=<?php echo $serie['SerieID']; ?>">
-                        <img src="../images/0000<?php echo $serie['SerieID']; ?>.jpg" alt="" >
-                        <img src="../images/000<?php echo $serie['SerieID']; ?>.jpg" alt="" >
-                        <img src="../images/00<?php echo $serie['SerieID']; ?>.jpg" alt="" >
-                  </a>  </div>
+                    <img src="../images/0000<?php echo $serie['SerieID']; ?>.jpg" alt="" >
+                    <img src="../images/000<?php echo $serie['SerieID']; ?>.jpg" alt="" >
+                        <img src="../images/00<?php echo $serie['SerieID']; ?>.jpg" alt="" ></a>
                 <?php } ?>
             </div>
-        </section>
+            <button id="next-btn" class="next-btn">&#129086</button>
+        </div>
+    </div>
+</section>
+
+<section class="active-section">
+    <h2>Popular</h2>
+    <div class="container">
+        <div class="carousel-view">
+            <button id="prev-btn" class="prev-btn">&#129084;</button>
+            <div id="item-list" class="item-list">
+                <?php foreach($randomSeries as $serie) { ?>
+                    <a href="./serie.php?id=<?php echo $serie['SerieID']; ?>">
+                    <img src="../images/0000<?php echo $serie['SerieID']; ?>.jpg" alt="" >
+                    <img src="../images/000<?php echo $serie['SerieID']; ?>.jpg" alt="" >
+                        <img src="../images/00<?php echo $serie['SerieID']; ?>.jpg" alt="" ></a>
+                <?php } ?>
+            </div>
+            <button id="next-btn" class="next-btn">&#129086</button>
+        </div>
+    </div>
+</section>
+
     </main>
     <footer class="footer">
     <div class="footer__container">
@@ -117,7 +111,21 @@ $imageSrc = "../images/"
         </div>
     </div>
 </footer>
+<script>
+   const prev = document.getElementById('prev-btn');
+const next = document.getElementById('next-btn');
+const list = document.getElementById('item-list');
+const itemWidth = 150;
+const padding = 10;
 
+prev.addEventListener('click', () => {
+    list.scrollLeft -= (itemWidth + padding);
+});
+
+next.addEventListener('click', () => {
+    list.scrollLeft += (itemWidth + padding);
+});
+</script>
 </body>
 </html>
 

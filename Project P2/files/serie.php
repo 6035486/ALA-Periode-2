@@ -3,7 +3,7 @@ require_once('../helpers/helpers.php');
 
 $serieID = $_GET['id'];
 $serieInfo = getSerieInfo($db, $serieID);
-$imageSrc = "../images/"
+$imageSrc = "../images/";
 ?>
 
 <!DOCTYPE html>
@@ -11,12 +11,11 @@ $imageSrc = "../images/"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Series Information</title>
     <link rel="stylesheet" href="../css/style.css">
-  
 </head>
 <body>
-<nav>
+    <nav>
         <img src="../images/HOBO_logo.png" alt="Logo">
         <article>
             <a href="./home.php">Home</a>
@@ -25,50 +24,47 @@ $imageSrc = "../images/"
             <a href="#">Logout</a>
         </article>
     </nav>
-<main class="info">
+    <main class="info">
         <div class="series-info">
             <div class="info-text">
                 <h2><?php echo $serieInfo[0]['SerieTitel']; ?></h2>
                 <p>Rating: <?php echo $serieInfo[0]['IMDBRating']; ?></p>
             </div>
-            <img src="<?php switch (strlen($serieInfo[0]['SerieID'])) {
-                            case 1:
-                                echo $imageSrc . "0000" . $serieInfo[0]['SerieID'] . ".jpg";
-                                break;
-                            
-                            case 2:
-                                echo $imageSrc . "000" . $serieInfo[0]['SerieID'] . ".jpg";
-                                break;
-                            
-                            case 3:
-                                echo $imageSrc . "00" .$serieInfo[0]['SerieID'] . ".jpg";
-                                break;
-                            case 4:
-                                echo $imageSrc . "0" . $serieInfo[0]['SerieID'] . ".jpg";
-                                break;
-                            
-                            default:
-                                
-                                break;
-                        } ?>" alt="" srcset="">
+            <img class="series-image" src="<?php
+                $serieIDLength = strlen($serieInfo[0]['SerieID']);
+                switch ($serieIDLength) {
+                    case 1:
+                        echo $imageSrc . "0000" . $serieInfo[0]['SerieID'] . ".jpg";
+                        break;
+                    case 2:
+                        echo $imageSrc . "000" . $serieInfo[0]['SerieID'] . ".jpg";
+                        break;
+                    case 3:
+                        echo $imageSrc . "00" . $serieInfo[0]['SerieID'] . ".jpg";
+                        break;
+                    case 4:
+                        echo $imageSrc . "0" . $serieInfo[0]['SerieID'] . ".jpg";
+                        break;
+                    default:
+                        echo $imageSrc . $serieInfo[0]['SerieID'] . ".jpg";
+                        break;
+                }
+            ?>" alt="Series Image">
         </div>
-
         <div class="seasons">
             <div class="dropdown">
-                
                 <select id="season-select" onchange="navigateToSeason(this)">
                     <?php
                     $seasons = [];
                     foreach ($serieInfo as $info) {
-                        if (!in_array($info['SeizoenID'], $seasons)) {
-                            $seasons[] = $info['SeizoenID']; ?>
+                        if (!in_array($info['Rang'], $seasons)) {
+                            $seasons[] = $info['Rang']; ?>
                             <option value="season-<?php echo $info['Rang']; ?>">Season <?php echo $info['Rang']; ?></option>
                         <?php }
                     }
                     ?>
                 </select>
             </div>
-
             <?php
             foreach ($seasons as $seasonID) { ?>
                 <div class="season" id="season-<?php echo $seasonID; ?>">
@@ -76,11 +72,13 @@ $imageSrc = "../images/"
                     <ul>
                         <?php
                         foreach ($serieInfo as $info) {
-                            if ($info['SeizoenID'] == $seasonID) { ?>
-                            <div class="episodes">
-                            <img src="../images/dummy.png" alt="">
-                                <li><?php echo $info['AflTitel']; ?> - Duration: <?php echo $info['Duur']; ?></li></div>
-                            <?php }
+                            if ($info['SeizoenID'] == $info['SeizID']) { 
+                                 if($info[''] = $info['Rang']){ ?>
+                                <div class="episodes">
+                                    <img src="../images/dummy.png" alt="Episode Image">
+                                    <li><?php echo $info['AflTitel']; ?> - Duration: <?php echo $info['Duur']; ?></li>
+                                </div>
+                            <?php }}
                         }
                         ?>
                     </ul>
@@ -89,50 +87,20 @@ $imageSrc = "../images/"
             ?>
         </div>
     </main>
-    <footer class="footer">
-    <div class="footer__container">
-        <div class="footer__info">
-            <h3 class="footer__title">Bedrijfsnaam</h3>
-            <p>1234 Adresstraat,<br>Stad, Land</p>
-            <p>Telefoon: (123) 456-7890</p>
-            <p>Email: info@bedrijf.nl</p>
-        </div>
-
-        <div class="footer__links">
-            <h3 class="footer__title">Snelle Links</h3>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Over Ons</a></li>
-                <li><a href="#">Diensten</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-
-        <div class="footer__social">
-            <h3 class="footer__title">Volg ons</h3>
-            <ul>
-                <li><a href="#">Facebook</a></li>
-                <li><a href="#">Twitter</a></li>
-                <li><a href="#">LinkedIn</a></li>
-                <li><a href="#">Instagram</a></li>
-            </ul>
-        </div>
-    </div>
-</footer>
-
-
     <script>
-        function navigateToSeason(select) {
-            var seasonID = select.value;
+        function navigateToSeason(selectElement) {
+            var seasonId = selectElement.value;
             document.querySelectorAll('.season').forEach(function(season) {
                 season.style.display = 'none';
             });
-            document.getElementById(seasonID).style.display = 'block';
+            document.getElementById(seasonId).style.display = 'block';
         }
-        
-        
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById('season-<?php echo $seasons[0]; ?>').style.display = 'block';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var seasonSelect = document.getElementById('season-select');
+            if (seasonSelect) {
+                navigateToSeason(seasonSelect);
+            }
         });
     </script>
 </body>

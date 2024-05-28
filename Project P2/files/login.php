@@ -1,30 +1,32 @@
 <?php
-
+session_start(); 
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     header('Location: home.php');
     exit;
 }
-require_once('../helpers/helpers.php');
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    login($db);}
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $login = checkPassword($db, $_POST['email'],$_POST["password"]);
-    if($login == false){
-        $error = "invalid login credentials";
-    }
-    else {
-        $_SESSION["email"] = $_POST["email"];
+require_once('../helpers/helpers.php');
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $user = checkPassword($db, $email, $password);
+
+    if ($user == false) {
+        $error = "Invalid login credentials";
+    } else {
+        $_SESSION['email'] = $email;
         $_SESSION['loggedin'] = true;
         $_SESSION['user_id'] = $user['id'];
-        $_SESSION['KlantNr'] = $user['KlantNr'];
-        header("location: home.php");
+        $_SESSION['klantNr'] = $user['KlantNr'];
+        header("Location: home.php");
         exit();
     }
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +39,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </head>
     <body class="login">
         <header>
-            <img class="logo" src="../images/HOBO_beeldmerk.png" alt="">
+            <a href="../index.php">
+            <img class="logo" src="../images/HOBO_beeldmerk.png" alt=""></a>
             <a  class="" href="signup.php">Signup</a>
         </header>
         <main>

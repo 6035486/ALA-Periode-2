@@ -85,6 +85,64 @@ nav {
   }
 }
 // home.php //
+
+  .bg-img {
+   
+    background-image: "../images/witcher.jpg";
+    min-height: 380px;
+  
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  
+    position: relative;
+  
+    .container {
+      position: absolute;
+      margin: 20px;
+      width: auto;
+    }
+  }
+  .carousel-view {
+    display: flex;
+    align-items: center;
+  }
+  
+  .prev-btn,
+  .next-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-size: xx-large;
+    color: $groen;
+    margin: 0 10px;
+  }
+  
+  .item-list {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+    img{
+      width: 150px;
+      padding: 1%;
+    }
+  }
+  
+  .item {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    margin-right: 1px; 
+    width: 10; 
+    height: auto; 
+  }
+  
+  .item-list::-webkit-scrollbar {
+    display: none; // Hide scrollbar for Chrome, Safari, and Opera
+  }
 .homepage {
   padding: 20px;
   background: $grijs;
@@ -382,4 +440,75 @@ body.search {
   }
   background-color: $grijs;
 
+}
+.profile {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  
+
+  &__title {
+      text-align: center;
+      color: $groen;
+      font-family: $titels;
+  }
+
+  &__details {
+      margin: 20px 0;
+      p{
+        color: $groen;
+        font-family: $paragrafen;
+      }
+
+      &__item {
+          margin-bottom: 10px;
+          
+      }
+  }
+
+  &__edit-button, &__save-button, &__cancel-button {
+      display: inline-block;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+  }
+
+  &__edit-button {
+      background-color: $groen;
+      color: white;
+  }
+
+  &__save-button {
+      background-color: $grijs;
+      color: white;
+  }
+
+  &__cancel-button {
+      background-color: #e74c3c;
+      color: white;
+  }
+
+  &__edit-form {
+      display: none;
+      margin-top: 20px;
+      
+      label {
+          display: block;
+          margin-bottom: 5px;
+          color: $groen;
+          font-family: $titels;
+      }
+      
+      input {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          color: $groen;
+          font-family: $paragrafen;
+      }
+  }
 }

@@ -1,26 +1,20 @@
 <?php
 require_once ('../connect/connect.php');
 
-function getActiveSeries($db, $klantnummer) {
+function getActiveSeries($db, $email) {
     $sql = "SELECT  serie.*
             FROM serie
             INNER JOIN serie_genre ON serie.SerieID = serie_genre.SerieID
             INNER JOIN genre ON serie_genre.GenreID = genre.GenreID
             INNER JOIN klant ON klant.Genre = genre.GenreNaam
-            WHERE serie.Actief = 1 AND klant.KlantNr = :klantnummer";
+            WHERE serie.Actief = 1 AND klant.Email = :email";
     $stmt = $db->prepare($sql);
-    $stmt->bindParam(':klantnummer', $klantnummer, PDO::PARAM_INT);
+    $stmt->bindParam(':email', $email, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-function getRandomSerie($db){
-    $sql = "SELECT * FROM serie WHERE Actief = 1 ORDER BY RAND() LIMIT 1";
-    $result = $db->query($sql);
-    return $result->fetchAll(PDO::FETCH_ASSOC);
-}
-
 function getRandomSeries($db){
-    $sql = "SELECT * FROM serie WHERE Actief = 1 ORDER BY RAND() LIMIT 10"; 
+    $sql = "SELECT * FROM serie WHERE Actief = 1 ORDER BY RAND() LIMIT 20"; 
     $result = $db->query($sql);
     return $result->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -32,10 +26,11 @@ function getSerieInfo($db, $serieID){
                    seizoen.IMDBRating, 
                    aflevering.Rang,
                    aflevering.AflTitel,
-                   aflevering.Duur
+                   aflevering.Duur,
+                   aflevering.SeizID
             FROM serie
             INNER JOIN seizoen ON serie.serieId = seizoen.SerieID
-            INNER JOIN aflevering ON seizoen.seizoenID = aflevering.seizID
+            INNER JOIN aflevering ON seizoen.seizoenID = aflevering.SeizID
             WHERE serie.serieId = :serieID";
     
     $stmt = $db->prepare($sql);
@@ -45,12 +40,6 @@ function getSerieInfo($db, $serieID){
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getNonActiveSeries($db)
-{
-    $sql = "SELECT * FROM serie WHERE Actief = 0";
-    $result = $db->query($sql);
-    return $result->fetchAll(PDO::FETCH_ASSOC);
-}
 function resetPassword($db)
 {
     $testpassword = "Password";
@@ -71,10 +60,40 @@ function checkPassword($db, $email, $password)
     $stm->execute([$email]);
     $selectedUser = $stm->fetch(PDO::FETCH_ASSOC);
     if (password_verify($password, $selectedUser["password"])) {
-        return $selectedUser['KlantNr'];
+        return $selectedUser;
     } else {
         return false;
     }
+}
+function getProfile($db, $email) {
+    $sql = "SELECT * FROM klant WHERE Email = :email";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR); 
+    $stmt->execute();
+    return $stmt->fetchALL(PDO::FETCH_ASSOC);
+}
+function changeProfile($db){
+    $sql = "UPDATE klant SET Voornaam = :voornaam, Achternaam = :achternaam, Email = :email, Genre = :genre WHERE Email = :email";
+    $stmt = $db->prepare($sql);
+    
+
+    $stmt->execute([
+        ':voornaam' => $_POST['Voornaam'],
+        ':achternaam' => $_POST['Achternaam'],
+        ':email' => $_POST['Email'],
+        ':genre' => $_POST['Genre'],
+        ':email' => $_SESSION['email']
+    ]);
+    $stmt->fetch(PDO::FETCH_ASSOC);
+}
+function deleteAccount($db, $email) {
+    $sql = "DELETE FROM klant WHERE email = :email";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR); 
+    $stmt->execute();
+
+    
+    return $stmt->rowCount();
 }
 
 function search($db, $search)
@@ -112,29 +131,4 @@ function admminLogin($db, $user, $password) {
         return false;
     }
 }
-function login($db){
-    
-    $fixedPassword = "Wachtwoord";
-    
-   
-    $hashedFixedPassword = password_hash($fixedPassword, PASSWORD_DEFAULT);
 
-    
-    $sql = "SELECT * FROM klant WHERE Email = ?";
-    $stm = $db->prepare($sql);
-    $stm->execute([$_POST['email']]);
-    $selectedUser = $stm->fetch(PDO::FETCH_ASSOC);
-
-    if (isset($selectedUser['Email'])) {
-       
-        if (!password_verify($_POST['password'], $hashedFixedPassword)) {
-            $error = "Password or email incorrect";
-        } else {
-            
-            $_SESSION["KlantNr"] = $selectedUser["KlantNr"];
-            header("Location: home.php");
-            exit();
-        }
-    } else {
-        $error = "Password or email incorrect";}
-}

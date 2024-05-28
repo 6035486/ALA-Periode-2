@@ -21,23 +21,4 @@ const images = [
           }
         }, 7000)
       }
-      
-      const series = [
-        "../images/gentlemen.jpg",
-        "../images/crown.jpg",
-        "../images/witcher.jpg"
-    ]
-
-    window.onload = () => {
-        const slideshowImg = document.getElementById('slideshow');
-        const hiddenImg = document.querySelector('.hidden');
-
-        let i = 1;
-        setInterval(() => {
-            slideshowImg.src = series[i];
-            hiddenImg.src = series[(i + 1) % series.length];
-
-            i = (i + 1) % series.length;
-        }, 7000);
-    }
-       
+     
