@@ -2,7 +2,6 @@
 session_start();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    // Redirect to login page
     header('Location: login.php');
     exit;
 }
@@ -26,23 +25,23 @@ $imageSrc = "../images/"
         
     </script>
 </head>
-<body class="home">
+<body class="home"> 
 <nav>
         <img src="../images/HOBO_logo.png" alt="Logo">
-        <article>
+        <article>  
             <a href="./home.php">Home</a>
             <a href="#">Contact</a>
-            <a href="#">Profile</a>
-            <a href="../index.php">Logout</a>
+            <a href="./profile.php">Profile</a>
+            <a href="./uitlog.php">Logout</a>
         </article>
-    </nav>
+    </nav>       
+
+    <div id="slideshow-container">
+        <img id="slideshow" src="../images/gentlemen.jpg" alt="Slideshow Image">
+        <img class="hidden" src="../images/crown.jpg" alt="Preload Image">
+    </div>
     <main class="homepage">
-    <article>
-
-    <img class="hidden" alt="preloading" />
-
-
-        </article>
+    
         <section class="active-section">
             <h2>Aanbevolen</h2>
             <div class="series-container">
@@ -65,7 +64,7 @@ $imageSrc = "../images/"
                                 break;
                             
                             default:
-                                # code...
+                                
                                 break;
                         } ?>" alt="" srcset="">
                        
@@ -100,7 +99,7 @@ $imageSrc = "../images/"
         <div class="footer__links">
             <h3 class="footer__title">Snelle Links</h3>
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="home.php">Home</a></li>
                 <li><a href="#">Over Ons</a></li>
                 <li><a href="#">Diensten</a></li>
                 <li><a href="#">Contact</a></li>

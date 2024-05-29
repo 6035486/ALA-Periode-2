@@ -6,7 +6,7 @@ if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
     exit;
 }
 require_once ('../helpers/helpers.php');
-require_once ('../connect/connect.php');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $login = adminLogin($db, $_POST['username'], $_POST["password"]);
     if ($login == false) {

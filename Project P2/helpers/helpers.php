@@ -119,3 +119,29 @@ function adminLogin($db, $user, $password) {
         return false;
     }
 }
+function login($db){
+    
+    $fixedPassword = "Wachtwoord";
+    
+   
+    $hashedFixedPassword = password_hash($fixedPassword, PASSWORD_DEFAULT);
+
+    
+    $sql = "SELECT * FROM klant WHERE Email = ?";
+    $stm = $db->prepare($sql);
+    $stm->execute([$_POST['email']]);
+    $selectedUser = $stm->fetch(PDO::FETCH_ASSOC);
+
+    if (isset($selectedUser['Email'])) {
+       
+        if (!password_verify($_POST['password'], $hashedFixedPassword)) {
+            $error = "Password or email incorrect";
+        } else {
+            
+            $_SESSION["KlantNr"] = $selectedUser["KlantNr"];
+            header("Location: home.php");
+            exit();
+        }
+    } else {
+        $error = "Password or email incorrect";}
+}

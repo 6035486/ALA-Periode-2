@@ -6,7 +6,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     exit;
 }
 require_once('../helpers/helpers.php');
-require_once('../connect/connect.php');
+
 $errors = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
