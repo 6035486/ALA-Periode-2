@@ -8,7 +8,7 @@ if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
 require_once ('../helpers/helpers.php');
 require_once ('../connect/connect.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $login = admminLogin($db, $_POST['username'], $_POST["password"]);
+    $login = adminLogin($db, $_POST['username'], $_POST["password"]);
     if ($login == false) {
         $error = "invalid login credentials";
     } else {

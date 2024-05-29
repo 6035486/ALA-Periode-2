@@ -5,10 +5,17 @@ if (!isset($_SESSION["admin"]) || $_SESSION["admin"] !== true) {
     exit();
 }
 require_once('../helpers/helpers.php');
-$series = getActiveSeries($db);
-if (isset($_POST['search'])) {
-    $series = adminSearch($db, $_POST['search']);
+if (isset($_POST["page"])) {
+    $page = (int)$_POST["page"];
+} else {
+    $page = 0;
 }
+$series = adminSearch($db, false, $page);
+if (isset($_POST['search'])) {
+    $series = adminSearch($db, $_POST['search'], $page);
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,8 +33,9 @@ if (isset($_POST['search'])) {
             <form method="post">
                 <input type="text" name="search" id="">
                 <input type="submit" value="search">
+                <input type="hidden" name="page" <?php echo 'value="'.$page.'"'; ?> id="">
             </form>
-        </section>
+        </section>  
         <section class="series">
             <?php
                 foreach ($series as $serie) {

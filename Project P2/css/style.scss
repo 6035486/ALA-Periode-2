@@ -340,14 +340,14 @@ body.search {
   }
   main {
     section{
-      padding-left: 12.5vw;
+      margin-left: 12.5vw;
       display: flex;
       width: 75vw;
       flex-wrap: wrap;
-      justify-content: start;
+      justify-content:space-around;
       img {
         width: 15vw;
-        padding-left: 5vw;
+        margin-left: 5vw;
       }
       a {
         width: 25vw;

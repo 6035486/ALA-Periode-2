@@ -89,11 +89,18 @@ function search($db, $search)
     return $results;
 
 }
-function adminSearch($db, $search)
+function adminSearch($db, $search = false, $offset = 0)
 {
-    $searchLike = "%".$search."%";
-    $query = $db->prepare("SELECT * FROM serie WHERE SerieTitel LIKE :search LIMIT 1000");
-    $query->execute(["search" => $searchLike]);
+    if ($search != false) {
+        $searchLike = "%".$search."%";
+        $offset = $offset * 30;
+        $query = $db->prepare("SELECT * FROM serie WHERE SerieTitel LIKE ? ORDER BY SerieTitel LIMIT 30 offset $offset");
+        $query->execute([$searchLike]);
+    }else {
+        $offset = $offset * 30;
+        $query = $db->prepare("SELECT * FROM serie ORDER BY SerieTitel LIMIT 30 offset $offset");
+        $query->execute();
+    }
     $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
     usort($results, fn($a, $b) => levenshtein($search, $a["SerieTitel"])<=> levenshtein($search, $b["SerieTitel"]));
@@ -101,7 +108,7 @@ function adminSearch($db, $search)
     return $results;
 }
 
-function admminLogin($db, $user, $password) {
+function adminLogin($db, $user, $password) {
     $sql = "SELECT * FROM users WHERE username = :username";
     $stm = $db->prepare($sql);
     $stm->execute(["username" => $user]);
