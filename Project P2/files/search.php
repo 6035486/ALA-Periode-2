@@ -34,7 +34,7 @@ $imageSrc = "../images/"
         <?php if (isset($results)) {
              foreach($results as $result) { 
                 if ($result["Actief"] == "1") {
-                    ?> <a href="#">
+                    ?> <a href="./serie.php?id=<?php echo $result['SerieID']; ?>">
                         <img src="<?php switch (strlen($result["SerieID"])) {
                             case 1:
                                 echo $imageSrc . "0000" . $result["SerieID"] . ".jpg";
