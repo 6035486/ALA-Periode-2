@@ -35,10 +35,6 @@ function show($db, $email){
 } 
 function getActiveSeries($db, $email) {
     $sql = "SELECT serie.*
-require_once '../connect/connect.php';
-
-function getActiveSeries($db, $klantnummer) {
-    $sql = "SELECT  serie.*
             FROM serie
             INNER JOIN serie_genre ON serie.SerieID = serie_genre.SerieID
             INNER JOIN genre ON serie_genre.GenreID = genre.GenreID
