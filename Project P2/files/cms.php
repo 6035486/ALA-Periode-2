@@ -5,10 +5,17 @@ if (!isset($_SESSION["admin"]) || $_SESSION["admin"] !== true) {
     exit();
 }
 require_once('../helpers/helpers.php');
-$series = getActiveSeries($db);
-if (isset($_POST['search'])) {
-    $series = adminSearch($db, $_POST['search']);
+if (isset($_POST["page"])) {
+    $page = (int)$_POST["page"];
+} else {
+    $page = 0;
 }
+$series = adminSearch($db, false, $page);
+if (isset($_POST['search'])) {
+    $series = adminSearch($db, $_POST['search'], $page);
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,8 +23,9 @@ if (isset($_POST['search'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="admin">
     <header>
         <h1>Hobo CMS</h1>
     </header>
@@ -26,19 +34,25 @@ if (isset($_POST['search'])) {
             <form method="post">
                 <input type="text" name="search" id="">
                 <input type="submit" value="search">
+                <input type="hidden" name="page" <?php echo 'value="'.$page.'"'; ?> id="">
             </form>
-        </section>
+        </section>  
         <section class="series">
             <?php
                 foreach ($series as $serie) {
                     ?>
-                        <article>
-                            <p><?php echo $serie["SerieTitel"] ?></p>
-                            <p>Actief: <?php if ($serie["Actief"] == 1) {
+                        <article <?php if ($serie["Actief"] == 1) { echo "class='actief'"; }?>>
+                            <p><?php echo $serie["SerieTitel"] ?></>
+                            <p >Actief: <?php if ($serie["Actief"] == 1) {
                                 echo "Ja";
                             }else {
                                 echo "nee";
                             } ?></p>
+                            <?php echo "<p>".$serie['GenreNaam']."</p>" ?>
+                            <form action="../post/activate.php" method="post">
+                                <?php echo '<input type="hidden" name="serieId" value="'.$serie["SerieID"].'">'; ?>
+                                <input type="submit" value="(de)activeer">
+                            </form>
                         </article>
                     <?php }
                     ?>

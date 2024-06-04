@@ -359,15 +359,15 @@ body.search header form input {
   border: none;
 }
 body.search main section {
-  padding-left: 12.5vw;
+  margin-left: 12.5vw;
   display: flex;
   width: 75vw;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: space-around;
 }
 body.search main section img {
   width: 15vw;
-  padding-left: 5vw;
+  margin-left: 5vw;
 }
 body.search main section a {
   width: 25vw;
@@ -379,6 +379,52 @@ body.search main section .serietitel {
 }
 body.search .logo {
   height: 2em;
+}
+
+.adminLogin {
+  align-items: center;
+}
+
+body.admin {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+body.admin h1 {
+  color: #92d051;
+  margin: 10px;
+}
+body.admin p {
+  color: #92d051;
+  font-family: "Montserrat", sans-serif;
+}
+body.admin input {
+  font-family: "Montserrat", sans-serif;
+  color: #efefef;
+  background-color: #92d051;
+  border: none;
+  border-radius: 0.8em;
+  margin: 1em;
+  padding: 1em;
+}
+body.admin .series {
+  width: 80vw;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: safe;
+  margin-left: 10vw;
+}
+body.admin .series .actief p {
+  color: #5b9bd5;
+  font-weight: 900;
+}
+body.admin .series article {
+  padding: 0.5vw;
+  border: 2px solid #92d051;
+  width: 10vw;
+  height: 9em;
+  margin: 0.5em;
+  border-radius: 0.5em;
 }
 
 .profile {
