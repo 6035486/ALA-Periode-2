@@ -26,6 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete'])) {
         $error = "Failed to delete the account. Please try again.";
     }
 }
+$email = $_SESSION['email'];
+$episodes = show($db, $email);
 ?>
 
 <!DOCTYPE html>
@@ -96,6 +98,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete'])) {
         echo "No profile data found.";
     }
     ?>
+    <section class="episodes" >
+        <article class="episode">
+            <h2>Onlangs Bekeken:</h2>
+            <?php foreach($episodes as $episode){ ?>
+                <img src="../images/dummy.png" alt="Episode Image">
+                <p><?php echo $episode['SerieTitel']; ?></p>
+                <p><?php echo $episode['AflTitel']; ?></p>
+                <p><?php echo $episode['Rang']; ?></p>
+                <p><?php echo $episode['d_start']; ?></p>
+                <p><?php echo $episode['d_eind']; ?></p>
+                <?php } ?>
+        </article>
+    </section>
 </main>
 
     <footer class="footer">

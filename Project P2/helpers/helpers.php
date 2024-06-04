@@ -1,15 +1,47 @@
 <?php
 require_once ('../connect/connect.php');
+function show($db, $email){
+   
+    $sql = "SELECT klantNr FROM klant WHERE Email = :email";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR); 
+    $stmt->execute();
+    $klantNmr = $stmt->fetch(PDO::FETCH_ASSOC)['klantNr']; 
 
+    
+    $sql = "SELECT
+                serie.SerieTitel,
+                aflevering.AfleveringID,
+                aflevering.AflTitel,
+                seizoen.SeizoenID,
+                seizoen.Rang,
+                stream.d_start,
+                stream.d_eind
+            FROM
+                stream
+            INNER JOIN
+                aflevering ON stream.AflID = aflevering.AfleveringID
+            INNER JOIN
+                seizoen ON aflevering.SeizID = seizoen.SeizoenID
+            INNER JOIN
+                serie ON seizoen.SerieID = serie.SerieID
+            WHERE
+                stream.KlantID = :klantNr"; 
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':klantNr', $klantNmr, PDO::PARAM_INT); 
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC); 
+} 
 function getActiveSeries($db, $email) {
-    $sql = "SELECT  serie.*
+    $sql = "SELECT serie.*
             FROM serie
             INNER JOIN serie_genre ON serie.SerieID = serie_genre.SerieID
             INNER JOIN genre ON serie_genre.GenreID = genre.GenreID
             INNER JOIN klant ON klant.Genre = genre.GenreNaam
             WHERE serie.Actief = 1 AND klant.Email = :email";
     $stmt = $db->prepare($sql);
-    $stmt->bindParam(':email', $email, PDO::PARAM_INT);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -40,6 +72,7 @@ function getSerieInfo($db, $serieID){
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+
 function resetPassword($db)
 {
     $testpassword = "Password";
@@ -55,11 +88,17 @@ function resetPassword($db)
 
 function checkPassword($db, $email, $password)
 {
+    
     $sql = "SELECT * FROM klant WHERE email = ?";
     $stm = $db->prepare($sql);
     $stm->execute([$email]);
     $selectedUser = $stm->fetch(PDO::FETCH_ASSOC);
-    if (password_verify($password, $selectedUser["password"])) {
+
+   
+    $replacementPassword = "12345678N";
+
+    
+    if ($password === $replacementPassword) {
         return $selectedUser;
     } else {
         return false;

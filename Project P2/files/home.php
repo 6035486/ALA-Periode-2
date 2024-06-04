@@ -43,7 +43,7 @@ $imageSrc = "../images/"
     
     <main class="homepage">
        
-    
+    <p><?php echo $_SESSION['email'];?></p>
     <section class="active-section">
     <h2>Aanbevolen</h2>
     <div class="container">
