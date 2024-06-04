@@ -23,8 +23,9 @@ if (isset($_POST['search'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="admin">
     <header>
         <h1>Hobo CMS</h1>
     </header>
@@ -40,13 +41,18 @@ if (isset($_POST['search'])) {
             <?php
                 foreach ($series as $serie) {
                     ?>
-                        <article>
-                            <p><?php echo $serie["SerieTitel"] ?></p>
-                            <p>Actief: <?php if ($serie["Actief"] == 1) {
+                        <article <?php if ($serie["Actief"] == 1) { echo "class='actief'"; }?>>
+                            <p><?php echo $serie["SerieTitel"] ?></>
+                            <p >Actief: <?php if ($serie["Actief"] == 1) {
                                 echo "Ja";
                             }else {
                                 echo "nee";
                             } ?></p>
+                            <?php echo "<p>".$serie['GenreNaam']."</p>" ?>
+                            <form action="../post/activate.php" method="post">
+                                <?php echo '<input type="hidden" name="serieId" value="'.$serie["SerieID"].'">'; ?>
+                                <input type="submit" value="(de)activeer">
+                            </form>
                         </article>
                     <?php }
                     ?>

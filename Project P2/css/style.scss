@@ -383,3 +383,52 @@ body.search {
   background-color: $grijs;
 
 }
+.adminLogin{
+  align-items: center;
+}
+body.admin {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  h1 {
+    color: $groen;
+    margin: 10px;
+  }
+  p {
+    color: $groen;
+    font-family: $paragrafen;
+  }
+  input {
+    font-family: $paragrafen;
+    color: $wit;
+    background-color: $groen;
+    border: none;
+    border-radius: 0.8em;
+    margin: 1em;
+    padding: 1em;
+  }
+
+    .series{
+      width: 80vw;
+      flex-wrap: wrap;
+      display: flex;
+      justify-content:safe;
+      margin-left: 10vw;
+      .actief{
+        p {
+          color: $blauw;
+          font-weight: 900;
+        }
+      }
+      article{
+       
+        padding: .5vw;
+        border: 2px solid $groen;
+        width: 10vw;
+        height: 9em;
+        margin: .5em;
+        border-radius: .5em;
+      }
+    }
+
+}

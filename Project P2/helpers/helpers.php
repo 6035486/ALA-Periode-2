@@ -1,5 +1,5 @@
 <?php
-require_once ('../connect/connect.php');
+require_once '../connect/connect.php';
 
 function getActiveSeries($db, $klantnummer) {
     $sql = "SELECT  serie.*
@@ -94,11 +94,21 @@ function adminSearch($db, $search = false, $offset = 0)
     if ($search != false) {
         $searchLike = "%".$search."%";
         $offset = $offset * 30;
-        $query = $db->prepare("SELECT * FROM serie WHERE SerieTitel LIKE ? ORDER BY SerieTitel LIMIT 30 offset $offset");
+        $query = $db->prepare("SELECT SELECT  serie.*
+        FROM serie
+        INNER JOIN serie_genre ON serie.SerieID = serie_genre.SerieID
+        INNER JOIN genre ON serie_genre.GenreID = genre.GenreID
+        INNER JOIN klant ON klant.Genre = genre.GenreNaam
+        WHERE SerieTitel LIKE ? ORDER BY SerieTitel LIMIT 30 offset $offset");
         $query->execute([$searchLike]);
     }else {
         $offset = $offset * 30;
-        $query = $db->prepare("SELECT * FROM serie ORDER BY SerieTitel LIMIT 30 offset $offset");
+        $query = $db->prepare("SELECT *
+        FROM serie
+        INNER JOIN serie_genre ON serie.SerieID = serie_genre.SerieID
+        INNER JOIN genre ON serie_genre.GenreID = genre.GenreID
+        INNER JOIN klant ON klant.Genre = genre.GenreNaam
+        ORDER BY SerieTitel LIMIT 30 offset $offset");
         $query->execute();
     }
     $results = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -144,4 +154,63 @@ function login($db){
         }
     } else {
         $error = "Password or email incorrect";}
+}
+function getSerieById($db, $serieId){
+    $sql = "SELECT * FROM serie WHERE SerieID = :id";
+    $stm = $db->prepare($sql);
+    $stm->execute(['id' => $serieId]);
+    $result = $stm->fetch(PDO::FETCH_ASSOC);
+    if(empty($result)){
+        return false;
+    }
+    return $result;
+}
+
+function activateSerie($db, $serieId) {
+    // Error codes: 
+    // Code 1, serie reeds actief.
+    // Code 2, Serie niet gevonden.
+    // Code 3, Serie actief maken niet gelukt
+    $serie = getSerieById($db, $serieId);
+    if ($serie == false){
+        throw new Exception("No serie found where SerieId = ". $serieId, 2);
+    }
+    if (isset($serie["Actief"])){
+        if($serie["Actief"] == 1){
+            throw new Exception("Serie already actief", 1);
+        } else {
+            try {
+                $sql = "UPDATE serie SET Actief = 1 WHERE SerieID = :id";
+                $stm = $db->prepare($sql);
+                $stm->execute(["id" => $serieId]);
+                return true;
+            } catch (\Throwable $th) {
+                throw new Exception("Failed to activate serie where SerieId = : ". $serieId, 3);
+            }
+        }
+    }
+}
+function deactivateSerie($db, $serieId) {
+    // Error codes: 
+    // Code 1, serie reeds deactief.
+    // Code 2, Serie niet gevonden.
+    // Code 3, Serie nonactief maken niet gelukt
+    $serie = getSerieById($db, $serieId);
+    if ($serie == false){
+        return new Error("No serie found where SerieId = ". $serieId, 2);
+    }
+    if (isset($serie["Actief"])){
+        if($serie["Actief"] == 0){
+            return new Error("Serie already deactivated", 1);
+        } else {
+            try {
+                $sql = "UPDATE serie SET Actief = 0 WHERE SerieID = :id";
+                $stm = $db->prepare($sql);
+                $stm->execute(["id" => $serieId]);
+                return true;
+            } catch (\Throwable $th) {
+                return new Error("Failed to deactivate  serie where SerieId = : ". $serieId, 3);
+            }
+        }
+    }
 }

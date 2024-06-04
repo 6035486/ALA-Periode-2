@@ -25,9 +25,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body>
+<body class="admin adminLogin">
     <h1>inloggen</h1>
     <form action="" method="post">
         <input class="" type="text" name="username" placeholder="username" id="" required>
