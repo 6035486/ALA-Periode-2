@@ -59,6 +59,7 @@ function getSerieInfo($db, $serieID, $SznID){
                    aflevering.Rang,
                    aflevering.AflTitel,
                    aflevering.Duur,
+                   aflevering.AfleveringID,
                    aflevering.SeizID
             FROM serie
             INNER JOIN seizoen ON serie.serieId = seizoen.SerieID
@@ -306,7 +307,7 @@ function watch($db, $klantId, $aflId) {
 }
 function totalWatchTime($db, $klantId)
 {
-    $sql = "SELECT SUM(DATADIFF(d_eind, d_start)) as total FROM stream WHERE KlantID = :klantId";
+    $sql = "SELECT SUM(TIMESTAMPDIFF(minute, d_start, d_eind)) as total FROM stream WHERE KlantID = :klantId";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(':klantId', $klantId, PDO::PARAM_INT);
     $stmt->execute();

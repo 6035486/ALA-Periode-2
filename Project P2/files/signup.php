@@ -27,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stm = $db->prepare($sql);
             $stm->execute([$_POST['firstname'], $_POST["tussenvoegsel"],$_POST['lastname'], $_POST["email"], $password, $_POST["fav_genre"]]);
             $_SESSION["KlantNr"] = $login;
+            $_SESSION['email'] = $_POST['email'];
             $_SESSION['loggedin'] = true;
             $_SESSION['user_id'] = $user['id'];
             header("location: home.php");
