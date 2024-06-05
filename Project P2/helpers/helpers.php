@@ -304,3 +304,12 @@ function watch($db, $klantId, $aflId) {
     $stmt->bindParam(':d_eind', $einde, PDO::PARAM_STR);
     $stmt->execute();   
 }
+function totalWatchTime($db, $klantId)
+{
+    $sql = "SELECT SUM(DATADIFF(d_eind, d_start)) as total FROM stream WHERE KlantID = :klantId";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':klantId', $klantId, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
+}
