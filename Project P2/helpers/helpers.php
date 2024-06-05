@@ -290,3 +290,17 @@ function deactivateSerie($db, $serieId) {
         }
     }
 }
+function watch($db, $klantId, $aflId) {
+    $sql = "SELECT Duur FROM aflevering WHERE AfleveringID = :aflId";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':aflId', $aflId, PDO::PARAM_INT);
+    $stmt->execute();
+    $duur = $stmt->fetch(PDO::FETCH_ASSOC)['Duur'];
+    $sql = "INSERT INTO stream (KlantID, AflID, d_start, d_eind) VALUES (:klantId, :aflId, NOW(), :d_eind)";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':klantId', $klantId, PDO::PARAM_INT);
+    $stmt->bindParam(":aflId", $aflId, PDO::PARAM_INT);
+    $einde = date('Y-m-d H:i:s', strtotime('+'.$duur.' minutes'));
+    $stmt->bindParam(':d_eind', $einde, PDO::PARAM_STR);
+    $stmt->execute();   
+}
