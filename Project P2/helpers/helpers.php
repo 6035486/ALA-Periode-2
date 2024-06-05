@@ -50,9 +50,9 @@ function getRandomSeries($db){
     $result = $db->query($sql);
     return $result->fetchAll(PDO::FETCH_ASSOC);
 }
-function getSerieInfo($db, $serieID){
+function getSerieInfo($db, $serieID, $SznID){
     $sql = "SELECT serie.*, 
-                   seizoen.Rang,
+                   seizoen.Rang AS sRang,
                    seizoen.SeizoenID, 
                    seizoen.Jaar,
                    seizoen.IMDBRating, 
@@ -63,8 +63,26 @@ function getSerieInfo($db, $serieID){
             FROM serie
             INNER JOIN seizoen ON serie.serieId = seizoen.SerieID
             INNER JOIN aflevering ON seizoen.seizoenID = aflevering.SeizID
-            WHERE serie.serieId = :serieID";
+            WHERE serie.serieId = :serieID AND seizoen.SeizoenID = :SznID";
     
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':serieID', $serieID, PDO::PARAM_INT);
+    $stmt->bindParam(':SznID', $SznID, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+function getSeason($db, $seasonID, $serieID) {
+    $sql = "SELECT SeizoenID FROM seizoen WHERE Rang = :seasonID AND serieID = :serieID";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':seasonID', $seasonID, PDO::PARAM_INT);
+    $stmt->bindParam(':serieID', $serieID, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+function getRang($db, $serieID) {
+    $sql = "SELECT Rang FROM seizoen WHERE serieID = :serieID";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(':serieID', $serieID, PDO::PARAM_INT);
     $stmt->execute();

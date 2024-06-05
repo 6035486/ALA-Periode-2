@@ -2,8 +2,14 @@
 require_once('../helpers/helpers.php');
 
 $serieID = $_GET['id'];
-$serieInfo = getSerieInfo($db, $serieID);
 $imageSrc = "../images/";
+$Srang = getRang($db, $serieID);
+$SznID = getSeason($db, 1, $serieID);
+foreach($SznID as $x){
+$serieInfo = getSerieInfo($db, $serieID, $x['SeizoenID'] );}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -53,32 +59,47 @@ $imageSrc = "../images/";
         </div>
         <div class="seasons">
             <div class="dropdown">
+                
                 <select id="season-select" onchange="navigateToSeason(this)">
                     <?php
                     $seasons = [];
-                    foreach ($serieInfo as $info) {
+                    foreach ($Srang as $info) {
                         if (!in_array($info['Rang'], $seasons)) {
                             $seasons[] = $info['Rang']; ?>
                             <option value="season-<?php echo $info['Rang']; ?>">Season <?php echo $info['Rang']; ?></option>
+
                         <?php }
                     }
-                    ?>
+                    ?>                      
                 </select>
             </div>
             <?php
             foreach ($seasons as $seasonID) { ?>
                 <div class="season" id="season-<?php echo $seasonID; ?>">
                     <h3>Season <?php echo $seasonID; ?></h3>
+                    <?php 
+                    $serieID = $_GET['id'];
+                    $xx = getSeason($db, $seasonID, $serieID);
+                    foreach($xx as $x){
+                    $SznID = $x['SeizoenID']; }
+                    
+                    $serieID = $_GET['id'];
+                    $serieInfo = getSerieInfo($db, $serieID, $SznID);?>
+                    
+                     
                     <ul>
+
                         <?php
                         foreach ($serieInfo as $info) {
-                            if ($info['SeizoenID'] == $info['SeizID']) { 
-                                 if($info[''] = $info['Rang']){ ?>
+                            
+                            ?>
+                            
+                               
                                 <div class="episodes">
                                     <img src="../images/dummy.png" alt="Episode Image">
                                     <li><?php echo $info['AflTitel']; ?> - Duration: <?php echo $info['Duur']; ?></li>
                                 </div>
-                            <?php }}
+                            <?php 
                         }
                         ?>
                     </ul>
