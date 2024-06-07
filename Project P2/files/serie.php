@@ -11,7 +11,7 @@ $SznID = $serie->getSeason(1, $serieID);
 foreach($SznID as $x){
     $serieInfo = $serie->getSerieInfo($serieID, $x['SeizoenID']);
 }
-$serieInfo = getSerieInfo($db, $serieID, $x['SeizoenID'] );}
+$serieInfo = $serie->getSerieInfo($db, $serieID, $x['SeizoenID'] );}
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
