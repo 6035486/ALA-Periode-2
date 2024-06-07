@@ -1,5 +1,21 @@
 <?php
-
 require_once('config.php');
-$db = new PDO("mysql:host=".$dbHost."dbname=".$dbName, $dbUser, $dbPassword);
-$db->exec('USE '.$dbName.';');
+class dbConfig {
+    protected $conn;
+
+    protected function connect() {
+        $servername = ;
+        $username = ;
+        $password = ;
+        $dbname = ;
+
+        try {
+            $this->conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo "Verbindingsfout: " . $e->getMessage();
+            exit();
+        }
+    }
+}
+?>

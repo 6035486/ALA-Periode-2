@@ -5,46 +5,26 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     header('Location: home.php');
     exit;
 }
+
 require_once('../helpers/helpers.php');
 
+$user = new User();
 $errors = [];
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $result = $user->register($_POST);
 
-    if ($_POST['confirm_email'] !== $_POST['email']) {
-        $errors['email'] = "email doesn't match";
-    }
-    if (strlen($_POST['password']) < 8) {
-        $errors['password'] = "minimum length 8 required";
-    }
-    if ($_POST['confirm_password'] !== $_POST['password']){
-        $errors['confirm_password'] = "password's do not match";
-    }
-    if(count($errors) == 0 && isset($_POST['firstname'], $_POST['lastname'], $_POST['confirm_email'], $_POST['email'],$_POST['password'],$_POST['confirm_password'],$_POST['fav_genre'])){
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        if (isset($_POST['tussenvoegsel'])) {
-            $sql = 'INSERT INTO klant (Voornaam, Tussenvoegsel, Achternaam, Email, password, Genre, AboID)
-            values (?,?,?,?,?,?,1);';
-            $stm = $db->prepare($sql);
-            $stm->execute([$_POST['firstname'], $_POST["tussenvoegsel"],$_POST['lastname'], $_POST["email"], $password, $_POST["fav_genre"]]);
-            $_SESSION["KlantNr"] = $login;
-            $_SESSION['loggedin'] = true;
-            $_SESSION['user_id'] = $user['id'];
-            header("location: home.php");
-        }
-        else {
-            $sql = 'INSERT INTO klant (Voornaam, Achternaam, Email, password, Genre, AboID)
-            values (?,?,?,?,?, 1);';
-            $stm = $db->prepare($sql);
-            $stm->execute([$_POST['firstname'],$_POST['lastname'], $_POST["email"], $password, $_POST["fav_genre"]]);
-            $_SESSION["KlantNr"] = $login;
-            $_SESSION['loggedin'] = true;
-            $_SESSION['user_id'] = $user['id'];
-            header("location: home.php");
-        }
-
+    if ($result['success']) {
+        $_SESSION['loggedin'] = true;
+        $_SESSION['user_id'] = $result['user_id'];
+        header("Location: home.php");
+        exit();
+    } else {
+        $errors = $result['errors'];
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

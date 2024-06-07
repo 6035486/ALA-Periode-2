@@ -5,10 +5,12 @@ if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
     header('Location: cms.php');
     exit;
 }
-require_once ('../helpers/helpers.php');
+
+require_once('../helpers/helpers.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $login = adminLogin($db, $_POST['username'], $_POST["password"]);
+    $user = new User();
+    $login = $user->adminLogin($_POST['username'], $_POST["password"]);
     if ($login == false) {
         $error = "invalid login credentials";
     } else {

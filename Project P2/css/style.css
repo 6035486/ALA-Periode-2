@@ -69,18 +69,62 @@ nav article a {
   color: #92d051;
 }
 
-.bg-img {
-  background-image: "../images/witcher.jpg";
-  min-height: 380px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.homepage .frontserie {
   position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  overflow: hidden;
 }
-.bg-img .container {
+.homepage .frontserie article {
+  position: relative;
+  z-index: 2;
+  padding: 20px;
+}
+.homepage .frontserie article h1, .homepage .frontserie article p {
+  color: #92d051;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+.homepage .frontserie article h1 {
+  font-size: x-large;
+  margin-bottom: 10px;
+}
+.homepage .frontserie article p {
+  font-size: medium;
+  margin-bottom: 20px;
+}
+.homepage .frontserie article button {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  color: #efefef;
+  background-color: #92d051;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.homepage .frontserie article button:hover {
+  background-color: #92d051;
+}
+.homepage .frontserie .img-container {
+  position: relative;
+  width: 100%;
+}
+.homepage .frontserie .img-container img {
+  width: 1000px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+.homepage .frontserie .img-container::before {
+  content: "";
   position: absolute;
-  margin: 20px;
-  width: auto;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, #444444, rgba(0, 0, 0, 0));
+  z-index: 1;
 }
 
 .carousel-view {
@@ -115,7 +159,7 @@ nav article a {
   flex: 0 0 auto;
   scroll-snap-align: start;
   margin-right: 1px;
-  width: 10;
+  width: 10px;
   height: auto;
 }
 

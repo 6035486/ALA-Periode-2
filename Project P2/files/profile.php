@@ -1,24 +1,27 @@
 <?php
 require_once('../helpers/helpers.php');
+
 session_start();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: login.php');
-    exit;
+    exit();
 }
-if(isset($_POST['submit'])){
-    changeProfile($db);
+
+$user = new User();
+$serie = new Serie();
+
+if (isset($_POST['submit'])) {
+    $user->changeProfile();
 }
 
 $email = $_SESSION['email'];
-$profileData = getProfile($db, $email);
+$profileData = $user->getProfile($email);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete'])) {
-    $email = $_SESSION['email']; 
-    $rowsDeleted = deleteAccount($db, $email);
+    $rowsDeleted = $user->deleteAccount($email);
 
     if ($rowsDeleted > 0) {
-        
         session_destroy(); 
         header("Location: delete.php"); 
         exit();
@@ -26,8 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete'])) {
         $error = "Failed to delete the account. Please try again.";
     }
 }
-$email = $_SESSION['email'];
-$episodes = show($db, $email);
+
+$episodes = $serie->show($email);
+$genre = new Genre();
+$genres = $genre->getAllGenres();
 ?>
 
 <!DOCTYPE html>
@@ -75,18 +80,12 @@ $episodes = show($db, $email);
             <input type="email" id="Email" name="Email" value="<?php echo $data['Email']; ?>">
                     
             <label for="Genre">Genre:</label>
-            <select name="Genre" id="Genre" required>
-                <?php
-                $sql = "SELECT GenreNaam FROM genre";
-                $stm = $db->prepare($sql);
-                $stm->execute();    
-                $result = $stm->fetchAll();
-                foreach ($result as $row) {
-                    $selected = ($row["GenreNaam"] == $data['Genre']) ? 'selected' : '';
-                    echo "<option class='' value='".$row["GenreNaam"]."' $selected>".$row["GenreNaam"]."</option>";
-                }
-                ?>
-            </select>
+            <select name="Genre">
+    <?php foreach ($genres as $genre) {
+        $selected = ($genre == $data['Genre']) ? 'selected' : '';
+        echo "<option class='' value='".$genre."' $selected>".$genre."</option>";
+    } ?>
+</select>
                     
             <button type="submit" name="submit" class="profile__save-button">Save Changes</button>
             <button type="button" class="profile__cancel-button" onclick="document.getElementById('editProfileForm').style.display='none'">Cancel</button>
@@ -98,19 +97,36 @@ $episodes = show($db, $email);
         echo "No profile data found.";
     }
     ?>
-    <section class="episodes" >
-        <article class="episode">
-            <h2>Onlangs Bekeken:</h2>
-            <?php foreach($episodes as $episode){ ?>
-                <img src="../images/dummy.png" alt="Episode Image">
-                <p><?php echo $episode['SerieTitel']; ?></p>
-                <p><?php echo $episode['AflTitel']; ?></p>
-                <p><?php echo $episode['Rang']; ?></p>
-                <p><?php echo $episode['d_start']; ?></p>
-                <p><?php echo $episode['d_eind']; ?></p>
-                <?php } ?>
-        </article>
-    </section>
+   
+<div class="container">  
+    <h2>Onlangs Bekeken:</h2>
+    <?php foreach($episodes as $episode): ?>
+        <div class="episode-group">
+            <h3><?php echo $episode['SerieTitel']; ?></h3>
+            <div class="carousel-view">
+                <button class="prev-btn">&#129084;</button>
+                <div class="item-list">
+                    <?php 
+                    $afleveringIds = explode(',', $episode['aflevering_ids']);
+                    $afleveringTitels = explode(',', $episode['aflevering_titels']);
+                    $startDates = explode(',', $episode['start_dates']);
+                    $endDates = explode(',', $episode['end_dates']);
+
+                    for ($i = 0; $i < count($afleveringIds); $i++) { ?>
+                        <div class="carousel-item">
+                            <img src="../images/dummy.png" alt="Episode Image">
+                            <p><?php echo $afleveringTitels[$i]; ?></p>
+                           
+                            <p>Start:<?php echo $startDates[$i]; ?></p>
+                            <p>Eind:<?php echo $endDates[$i]; ?></p>
+                        </div>
+                    <?php } ?>
+                </div>
+                <button class="next-btn">&#129086;</button>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
 </main>
 
     <footer class="footer">
@@ -145,3 +161,18 @@ $episodes = show($db, $email);
 </footer>
 </body>
 </html>
+<script>
+   const prev = document.getElementById('prev-btn');
+const next = document.getElementById('next-btn');
+const list = document.getElementById('item-list');
+const itemWidth = 150;
+const padding = 10;
+
+prev.addEventListener('click', () => {
+    list.scrollLeft -= (itemWidth + padding);
+});
+
+next.addEventListener('click', () => {
+    list.scrollLeft += (itemWidth + padding);
+});
+</script>

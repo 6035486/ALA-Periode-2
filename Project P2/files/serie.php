@@ -3,12 +3,14 @@ require_once('../helpers/helpers.php');
 
 $serieID = $_GET['id'];
 $imageSrc = "../images/";
-$Srang = getRang($db, $serieID);
-$SznID = getSeason($db, 1, $serieID);
+$serie = new Serie();
+
+$Srang = $serie->getRang($serieID);
+$SznID = $serie->getSeason(1, $serieID);
+
 foreach($SznID as $x){
-$serieInfo = getSerieInfo($db, $serieID, $x['SeizoenID'] );}
-
-
+    $serieInfo = $serie->getSerieInfo($serieID, $x['SeizoenID']);
+}
 
 ?>
 

@@ -85,25 +85,77 @@ nav {
   }
 }
 // home.php //
+.homepage {
+  
 
-  .bg-img {
-   
-    background-image: "../images/witcher.jpg";
-    min-height: 380px;
-  
-    
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  
+  .frontserie {
     position: relative;
-  
-    .container {
-      position: absolute;
-      margin: 20px;
-      width: auto;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+
+
+    article {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+
+      h1, p {
+        color: $groen;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+      }
+
+      h1 {
+        font-size: x-large;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: medium;
+        margin-bottom: 20px;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        color: $wit;
+        background-color: $groen;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: $groen;
+        }
+      }
+    }
+
+    .img-container {
+      position: relative;
+      width: 100%;
+      
+      img {
+        width: 1000px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(to right, $grijs, rgba(0, 0, 0, 0));
+        z-index: 1;
+      }
     }
   }
+}
   .carousel-view {
     display: flex;
     align-items: center;
@@ -136,12 +188,12 @@ nav {
     flex: 0 0 auto;
     scroll-snap-align: start;
     margin-right: 1px; 
-    width: 10; 
+    width: 10px; 
     height: auto; 
   }
   
   .item-list::-webkit-scrollbar {
-    display: none; // Hide scrollbar for Chrome, Safari, and Opera
+    display: none; 
   }
 .homepage {
   padding: 20px;

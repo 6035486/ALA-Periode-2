@@ -1,5 +1,5 @@
 <?php
-session_start(); 
+session_start();
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     header('Location: home.php');
@@ -8,19 +8,21 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 
 require_once('../helpers/helpers.php');
 
+$user = new User();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $user = checkPassword($db, $email, $password);
+    $loginUser = $user->checkPassword($email, $password);
 
-    if ($user == false) {
+    if ($loginUser == false) {
         $error = "Invalid login credentials";
     } else {
         $_SESSION['email'] = $email;
         $_SESSION['loggedin'] = true;
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['klantNr'] = $user['KlantNr'];
+        $_SESSION['user_id'] = $loginUser['id'];
+        $_SESSION['klantNr'] = $loginUser['KlantNr'];
         header("Location: home.php");
         exit();
     }

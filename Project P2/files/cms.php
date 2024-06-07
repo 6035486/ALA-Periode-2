@@ -1,21 +1,23 @@
 <?php
 session_start();
 if (!isset($_SESSION["admin"]) || $_SESSION["admin"] !== true) {
-    header("admin.php");
+    header("Location: admin.php");
     exit();
 }
+
 require_once('../helpers/helpers.php');
+
+$serie = new Serie();
+
 if (isset($_POST["page"])) {
     $page = (int)$_POST["page"];
 } else {
     $page = 0;
 }
-$series = adminSearch($db, false, $page);
+$series = $serie->adminSearch(false, $page);
 if (isset($_POST['search'])) {
-    $series = adminSearch($db, $_POST['search'], $page);
+    $series = $serie->adminSearch($_POST['search'], $page);
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
