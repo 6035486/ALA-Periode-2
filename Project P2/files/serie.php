@@ -1,6 +1,6 @@
 <?php
 require_once('../helpers/helpers.php');
-
+session_start();
 $serieID = $_GET['id'];
 $imageSrc = "../images/";
 $serie = new Serie();
@@ -10,6 +10,21 @@ $SznID = $serie->getSeason(1, $serieID);
 
 foreach($SznID as $x){
     $serieInfo = $serie->getSerieInfo($serieID, $x['SeizoenID']);
+}
+$serieInfo = getSerieInfo($db, $serieID, $x['SeizoenID'] );}
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+        if(isset($_POST['afleveringId'])) {
+            $profileData = getProfile($db, $_SESSION['email']);
+            try {
+                watch($db, $profileData[0]['KlantNr'], $_POST['afleveringId']);
+            } catch (PDOException $th) {
+                var_dump($th);
+            }
+           
+        }
+    }
 }
 
 ?>
@@ -100,6 +115,10 @@ foreach($SznID as $x){
                                 <div class="episodes">
                                     <img src="../images/dummy.png" alt="Episode Image">
                                     <li><?php echo $info['AflTitel']; ?> - Duration: <?php echo $info['Duur']; ?></li>
+                                    <form method="post">
+                                        <input type="hidden" name="afleveringId" value="<?php echo $info['AfleveringID']; ?>">
+                                        <input type="submit" value="Watch">
+                                    </form>
                                 </div>
                             <?php 
                         }

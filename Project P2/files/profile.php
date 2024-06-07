@@ -17,6 +17,8 @@ if (isset($_POST['submit'])) {
 
 $email = $_SESSION['email'];
 $profileData = $user->getProfile($email);
+$profileData = getProfile($db, $email);
+$totalWatchTime = totalWatchTime($db, $profileData[0]['KlantNr']);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete'])) {
     $rowsDeleted = $user->deleteAccount($email);
@@ -64,6 +66,7 @@ $genres = $genre->getAllGenres();
         <p class="profile__item"><strong>Last Name:</strong> <?php echo $data['Achternaam']; ?></p>
         <p class="profile__item"><strong>Email:</strong> <?php echo $data['Email']; ?></p>
         <p class="profile__item"><strong>Genre:</strong> <?php echo $data['Genre']; ?></p>
+        <p class="profile__item"><strong>Total Watch Time:</strong> <?php echo $totalWatchTime['total']; ?> minutes</p>
     </div>
     
     <button class="profile__edit-button" type="submit" name="delete">Delete Account</button>
