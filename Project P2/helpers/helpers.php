@@ -155,7 +155,7 @@ class Serie extends dbConfig{
     }
 
     public function show($email) {
-        $user = new User($this->conn);
+        $user = new User();
         $klantNr = $user->getKlantNrByEmail($email);
 
         $sql = "
@@ -349,7 +349,7 @@ class Stream extends dbConfig{
         $stmt->execute();
         $duur = $stmt->fetch(PDO::FETCH_ASSOC)['Duur'];
         $sql = "INSERT INTO stream (KlantID, AflID, d_start, d_eind) VALUES (:klantId, :aflId, NOW(), :d_eind)";
-        $stmt = $this->db->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':klantId', $klantId, PDO::PARAM_INT);
         $stmt->bindParam(":aflId", $aflId, PDO::PARAM_INT);
         $einde = date('Y-m-d H:i:s', strtotime('+' . $duur . ' minutes'));

@@ -10,6 +10,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 $user = new User();
 $serie = new Serie();
+$stream = new Stream();
 
 if (isset($_POST['submit'])) {
     $user->changeProfile();
@@ -17,8 +18,7 @@ if (isset($_POST['submit'])) {
 
 $email = $_SESSION['email'];
 $profileData = $user->getProfile($email);
-$profileData = getProfile($db, $email);
-$totalWatchTime = totalWatchTime($db, $profileData[0]['KlantNr']);
+$totalWatchTime = $steam->totalWatchTime($db, $profileData[0]['KlantNr']);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete'])) {
     $rowsDeleted = $user->deleteAccount($email);

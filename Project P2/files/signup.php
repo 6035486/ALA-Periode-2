@@ -86,14 +86,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ?>
             <section>
             <p>Favorite Genre</p>
-            <select name="fav_genre" class="" id="" required>
+            <select name="fav_genre" required>
                 <?php
-                $sql = "SELECT GenreNaam FROM genre";
-                $stm = $db->prepare($sql);
-                $stm->execute();    
-                $result = $stm->fetchAll();
-                foreach ($result as $row) {
-                    echo "<option class='' value='".$row["GenreNaam"]."'>".$row["GenreNaam"]."</option>";
+                $genres = new Genre();
+                $genres = $genres->getAllGenres();
+                foreach ($genres as $genre) {
+                    echo "<option class='' value='".$genre."'>".$genre."</option>";
                 }
                 ?>
             </select>

@@ -4,6 +4,8 @@ session_start();
 $serieID = $_GET['id'];
 $imageSrc = "../images/";
 $serie = new Serie();
+$user = new User();
+$stream = new Stream();
 
 $Srang = $serie->getRang($serieID);
 $SznID = $serie->getSeason(1, $serieID);
@@ -11,14 +13,13 @@ $SznID = $serie->getSeason(1, $serieID);
 foreach($SznID as $x){
     $serieInfo = $serie->getSerieInfo($serieID, $x['SeizoenID']);
 }
-$serieInfo = $serie->getSerieInfo($db, $serieID, $x['SeizoenID'] );}
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         if(isset($_POST['afleveringId'])) {
-            $profileData = getProfile($db, $_SESSION['email']);
+            $profileData = $user->getProfile($_SESSION['email']);
             try {
-                watch($db, $profileData[0]['KlantNr'], $_POST['afleveringId']);
+                $stream->watch($profileData[0]['KlantNr'], $_POST['afleveringId']);
             } catch (PDOException $th) {
                 var_dump($th);
             }
@@ -96,12 +97,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <h3>Season <?php echo $seasonID; ?></h3>
                     <?php 
                     $serieID = $_GET['id'];
-                    $xx = getSeason($db, $seasonID, $serieID);
+                    $xx = $serie->getSeason($seasonID, $serieID);
                     foreach($xx as $x){
                     $SznID = $x['SeizoenID']; }
                     
                     $serieID = $_GET['id'];
-                    $serieInfo = getSerieInfo($db, $serieID, $SznID);?>
+                    $serieInfo = $serie->getSerieInfo($serieID, $SznID);?>
                     
                      
                     <ul>

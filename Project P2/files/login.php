@@ -48,8 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <main>
             <h1>inloggen</h1>
             <form action="" method="post">
-                <input class="" type="email" name="email" placeholder="email" id="" required>
-                <input class="" type="password" name="password" placeholder="password" id="" required>
+                <input class="" type="email" name="email" placeholder="email" required>
+                <input class="" type="password" name="password" placeholder="password" required>
                 <input class="submit" type="submit" value="Login">
             </form>
             <p class="error">
