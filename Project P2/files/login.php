@@ -10,16 +10,16 @@ require_once('../helpers/helpers.php');
 
 $user = new User();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'], $_POST['password'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
     $loginUser = $user->checkPassword($email, $password);
 
-    if ($loginUser == false) {
+    if ($loginUser === false) {
         $error = "Invalid login credentials";
     } else {
-        $_SESSION['email'] = $email;
+        $_SESSION['email'] = $loginUser['Email'];
         $_SESSION['loggedin'] = true;
         $_SESSION['user_id'] = $loginUser['id'];
         $_SESSION['klantNr'] = $loginUser['KlantNr'];
@@ -48,8 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <main>
             <h1>inloggen</h1>
             <form action="" method="post">
-                <input class="" type="email" name="email" placeholder="email" id="" required>
-                <input class="" type="password" name="password" placeholder="password" id="" required>
+                <input class="" type="email" name="email" placeholder="email" required>
+                <input class="" type="password" name="password" placeholder="password" required>
                 <input class="submit" type="submit" value="Login">
             </form>
             <p class="error">

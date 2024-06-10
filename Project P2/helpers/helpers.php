@@ -13,25 +13,15 @@ class User extends dbConfig {
         return $stmt->fetch(PDO::FETCH_ASSOC)['klantNr'];
     }
 
-    public function resetPassword() {
-        $testpassword = "Password";
-        $password = password_hash($testpassword, PASSWORD_DEFAULT);
-        $sql = "UPDATE klant SET password = ? WHERE 1=1";
-        $stm = $this->conn->prepare($sql);
-        $stm->execute([$password]);
-    }
-
     public function checkPassword($email, $password) {
         $sql = "SELECT * FROM klant WHERE email = ?";
         $stm = $this->conn->prepare($sql);
         $stm->execute([$email]);
         $selectedUser = $stm->fetch(PDO::FETCH_ASSOC);
-        $replacementPassword = "12345678N";
-        if ($password === $replacementPassword) {
+        if (password_verify($password, $selectedUser['password'])) {
             return $selectedUser;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function getProfile($email) {
@@ -62,26 +52,6 @@ class User extends dbConfig {
         return $stmt->rowCount();
     }
 
-    public function login($email, $password) {
-        $fixedPassword = "Wachtwoord";
-        $hashedFixedPassword = password_hash($fixedPassword, PASSWORD_DEFAULT);
-        $sql = "SELECT * FROM klant WHERE Email = ?";
-        $stm = $this->conn->prepare($sql);
-        $stm->execute([$email]);
-        $selectedUser = $stm->fetch(PDO::FETCH_ASSOC);
-        if (isset($selectedUser['Email'])) {
-            if (!password_verify($password, $hashedFixedPassword)) {
-                throw new Exception("Password or email incorrect");
-            } else {
-                $_SESSION["KlantNr"] = $selectedUser["KlantNr"];
-                header("Location: home.php");
-                exit();
-            }
-        } else {
-            throw new Exception("Password or email incorrect");
-        }
-    }
-
     public function adminLogin($user, $password) {
         $sql = "SELECT * FROM users WHERE username = :username";
         $stm = $this->conn->prepare($sql);
@@ -102,6 +72,8 @@ class User extends dbConfig {
         }
         if (strlen($data['password']) < 8) {
             $errors['password'] = "minimum length 8 required";
+        } else if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $data['password']) || !preg_match('/[A-Z]/', $data['password']) || !preg_match('/[a-z]/', $data['password'])) {
+            $errors['password'] = "Use atleast one special, one uppercase and one lowercase character";
         }
         if ($data['confirm_password'] !== $data['password']) {
             $errors['confirm_password'] = "passwords do not match";
@@ -155,7 +127,7 @@ class Serie extends dbConfig{
     }
 
     public function show($email) {
-        $user = new User($this->conn);
+        $user = new User();
         $klantNr = $user->getKlantNrByEmail($email);
 
         $sql = "
@@ -349,7 +321,7 @@ class Stream extends dbConfig{
         $stmt->execute();
         $duur = $stmt->fetch(PDO::FETCH_ASSOC)['Duur'];
         $sql = "INSERT INTO stream (KlantID, AflID, d_start, d_eind) VALUES (:klantId, :aflId, NOW(), :d_eind)";
-        $stmt = $this->db->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':klantId', $klantId, PDO::PARAM_INT);
         $stmt->bindParam(":aflId", $aflId, PDO::PARAM_INT);
         $einde = date('Y-m-d H:i:s', strtotime('+' . $duur . ' minutes'));

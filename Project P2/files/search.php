@@ -1,4 +1,6 @@
 <?php
+require_once('../helpers/helpers.php');
+$serie = new Serie();
 session_start();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -7,7 +9,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 require_once('../helpers/helpers.php');
 if (isset($_POST["query"])) {
-    $results = search($db, $_POST["query"]);
+    $results = $serie->search($_POST["query"]);
 }
 $imageSrc = "../images/"
 ?>
