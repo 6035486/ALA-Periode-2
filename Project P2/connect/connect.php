@@ -4,10 +4,10 @@ class dbConfig {
     protected $conn;
 
     protected function connect() {
-        $servername = ;
-        $username = ;
-        $password = ;
-        $dbname = ;
+        $servername = "localhost:3306";
+        $username = "root";
+        $password = "Hoefblad89" ;
+        $dbname = "hobo2022";
 
         try {
             $this->conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
