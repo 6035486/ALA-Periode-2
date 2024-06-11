@@ -130,8 +130,7 @@ class Serie extends dbConfig{
         $user = new User();
         $klantNr = $user->getKlantNrByEmail($email);
 
-        $sql = "
-        SELECT
+        $sql = "SELECT
             serie.SerieTitel,
             GROUP_CONCAT(DISTINCT aflevering.AfleveringID ORDER BY aflevering.AfleveringID) AS aflevering_ids,
             GROUP_CONCAT(DISTINCT aflevering.AflTitel ORDER BY aflevering.AflTitel) AS aflevering_titels,
@@ -185,6 +184,7 @@ class Serie extends dbConfig{
                        seizoen.Jaar,
                        seizoen.IMDBRating, 
                        aflevering.Rang,
+                       aflevering.afleveringID,
                        aflevering.AflTitel,
                        aflevering.Duur,
                        aflevering.SeizID
@@ -313,17 +313,36 @@ class Stream extends dbConfig{
     public function __construct() {
         $this->connect();
     }
+    public function aanbevolen($klantID){
+        $sql = "SELECT DISTINCT seizoen.SerieID
+        FROM stream
+        INNER JOIN aflevering ON stream.AflID = aflevering.AfleveringID
+        INNER JOIN seizoen ON aflevering.SeizID = seizoen.SeizoenID
+        WHERE stream.KlantID = :klantID";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':klantID', $klantID, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+    
 
     public function watch($klantId, $aflId) {
         $sql = "SELECT Duur FROM aflevering WHERE AfleveringID = :aflId";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':aflId', $aflId, PDO::PARAM_INT);
         $stmt->execute();
-        $duur = $stmt->fetch(PDO::FETCH_ASSOC)['Duur'];
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($result === false) {
+            throw new Exception("AfleveringID does not exist");
+        }
+    
+        $duur = $result['Duur'];
         $sql = "INSERT INTO stream (KlantID, AflID, d_start, d_eind) VALUES (:klantId, :aflId, NOW(), :d_eind)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':klantId', $klantId, PDO::PARAM_INT);
-        $stmt->bindParam(":aflId", $aflId, PDO::PARAM_INT);
+        $stmt->bindParam(':aflId', $aflId, PDO::PARAM_INT);
         $einde = date('Y-m-d H:i:s', strtotime('+' . $duur . ' minutes'));
         $stmt->bindParam(':d_eind', $einde, PDO::PARAM_STR);
         $stmt->execute();

@@ -47,14 +47,16 @@ $genres = $genre->getAllGenres();
 </head>
 <body>
 <nav>
+    
         <img src="../images/HOBO_logo.png" alt="Logo">
-        <article>
+        <article>  
             <a href="./home.php">Home</a>
             <a href="#">Contact</a>
-            <a href="#">Profile</a>
+            <a href="./profile.php">Profile</a>
+            <a href="historie.php">History</a>
             <a href="./uitlog.php">Logout</a>
         </article>
-    </nav>
+    </nav>  
     <main class="profile">
     <h2 class="profile__title">Profile</h2>
     <?php
@@ -66,7 +68,7 @@ $genres = $genre->getAllGenres();
         <p class="profile__item"><strong>Last Name:</strong> <?php echo $data['Achternaam']; ?></p>
         <p class="profile__item"><strong>Email:</strong> <?php echo $data['Email']; ?></p>
         <p class="profile__item"><strong>Genre:</strong> <?php echo $data['Genre']; ?></p>
-        <p class="profile__item"><strong>Total Watch Time:</strong> <?php echo $totalWatchTime; ?> minutes</p>
+       
     </div>
     
     <button class="profile__edit-button" type="submit" name="delete">Delete Account</button>
@@ -101,35 +103,7 @@ $genres = $genre->getAllGenres();
     }
     ?>
    
-<div class="container">  
-    <h2>Onlangs Bekeken:</h2>
-    <?php foreach($episodes as $episode): ?>
-        <div class="episode-group">
-            <h3><?php echo $episode['SerieTitel']; ?></h3>
-            <div class="carousel-view">
-                <button class="prev-btn">&#129084;</button>
-                <div class="item-list">
-                    <?php 
-                    $afleveringIds = explode(',', $episode['aflevering_ids']);
-                    $afleveringTitels = explode(',', $episode['aflevering_titels']);
-                    $startDates = explode(',', $episode['start_dates']);
-                    $endDates = explode(',', $episode['end_dates']);
 
-                    for ($i = 0; $i < count($afleveringIds); $i++) { ?>
-                        <div class="carousel-item">
-                            <img src="../images/dummy.png" alt="Episode Image">
-                            <p><?php echo $afleveringTitels[$i]; ?></p>
-                           
-                            <p>Start:<?php echo $startDates[$i]; ?></p>
-                            <p>Eind:<?php echo $endDates[$i]; ?></p>
-                        </div>
-                    <?php } ?>
-                </div>
-                <button class="next-btn">&#129086;</button>
-            </div>
-        </div>
-    <?php endforeach; ?>
-</div>
 </main>
 
     <footer class="footer">
@@ -164,18 +138,3 @@ $genres = $genre->getAllGenres();
 </footer>
 </body>
 </html>
-<script>
-   const prev = document.getElementById('prev-btn');
-const next = document.getElementById('next-btn');
-const list = document.getElementById('item-list');
-const itemWidth = 150;
-const padding = 10;
-
-prev.addEventListener('click', () => {
-    list.scrollLeft -= (itemWidth + padding);
-});
-
-next.addEventListener('click', () => {
-    list.scrollLeft += (itemWidth + padding);
-});
-</script>

@@ -15,16 +15,16 @@ foreach($SznID as $x){
 }
 $serieInfo = $serie->getSerieInfo( $serieID, $x['SeizoenID'] );
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-        if(isset($_POST['afleveringId'])) {
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+        if (isset($_POST['afleveringId'])) {
             $profileData = $user->getProfile($_SESSION['email']);
             try {
                 $stream->watch($profileData[0]['KlantNr'], $_POST['afleveringId']);
-            } catch (PDOException $th) {
-                var_dump($th);
+            } catch (Exception $th) {
+                echo "Error: " . $th->getMessage();
             }
-           
         }
     }
 }
@@ -40,15 +40,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <nav>
+<nav>
+    
         <img src="../images/HOBO_logo.png" alt="Logo">
-        <article>
+        <article>  
             <a href="./home.php">Home</a>
             <a href="#">Contact</a>
-            <a href="#">Profile</a>
-            <a href="#">Logout</a>
+            <a href="./profile.php">Profile</a>
+            <a href="historie.php">History</a>
+            <a href="./uitlog.php">Logout</a>
         </article>
-    </nav>
+    </nav>  
     <main class="info">
         <div class="series-info">
             <div class="info-text">
@@ -110,21 +112,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                         <?php
                         foreach ($serieInfo as $info) {
-                            
                             ?>
-                            
-                               
-                                <div class="episodes">
-                                    <img src="../images/dummy.png" alt="Episode Image">
-                                    <li><?php echo $info['AflTitel']; ?> - Duration: <?php echo $info['Duur']; ?></li>
-                                    <form method="post">
-                                        <input type="hidden" name="afleveringId" value="<?php echo $info['AfleveringID']; ?>">
-                                        <input type="submit" value="Watch">
-                                    </form>
-                                </div>
-                            <?php 
-                        }
-                        ?>
+                            <div class="episodes">
+                                <img src="../images/dummy.png" alt="Episode Image">
+                                <li><?php echo $info['AflTitel']; ?> - Duration: <?php echo $info['Duur']; ?></li>
+                                <p><?php echo $info['afleveringID']; ?></p>
+                                <form method="post">
+                                    <input type="hidden" name="afleveringId" value="<?php echo $info['afleveringID']; ?>">
+                                    <input type="submit" value="Watch">
+                                </form>
+                            </div>
+                            <?php
+                        } ?>
                     </ul>
                 </div>
             <?php }

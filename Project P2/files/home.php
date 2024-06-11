@@ -9,8 +9,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 require_once('../helpers/helpers.php');
 
 $imageSrc = "../images/";
+$user = new User();
+$email = $_SESSION['email'];
+$profileData = $user->getProfile($email);
 $serie = new Serie();
-
+$stream = new Stream();
+$aanbevolen = $stream->aanbevolen($profileData[0]['KlantNr']);
 $email = $_SESSION['email'];
 $series = $serie->getActiveSeries($email);
 
@@ -37,12 +41,14 @@ $imageSrc = "../images/";
             <a href="./home.php">Home</a>
             <a href="#">Contact</a>
             <a href="./profile.php">Profile</a>
+            <a href="historie.php">History</a>
             <a href="./uitlog.php">Logout</a>
         </article>
     </nav>       
 
     
     <main class="homepage">
+   
         <section class="frontserie">
             <article class="witcher">
                 <h1>Witcher</h1>
@@ -53,7 +59,41 @@ $imageSrc = "../images/";
             </article>
         </section>
        
-   
+        <section class="active-section">
+    <h2>Kijk verder</h2>
+    <div class="container">
+        <div class="carousel-view">
+            <button id="prev-btn" class="prev-btn">&#129084;</button>
+            <div id="item-list" class="item-list">
+               
+                <?php foreach($aanbevolen as $serie) { ?>
+                <a href="serie.php?id=<?php echo $serie['SerieID'];?>">
+                <img src="<?php
+                    $serieIDLength = strlen($serie['SerieID']);
+                switch ($serieIDLength) {
+                    case 1:
+                        echo $imageSrc . "0000" . $serie['SerieID'] . ".jpg";
+                        break;
+                    case 2:
+                        echo $imageSrc . "000" . $serie['SerieID'] . ".jpg";
+                        break;
+                    case 3:
+                        echo $imageSrc . "00" . $serie['SerieID'] . ".jpg";
+                        break;
+                    case 4:
+                        echo $imageSrc . "0" . $serie['SerieID'] . ".jpg";
+                        break;
+                    default:
+                        echo $imageSrc . $serie['SerieID'] . ".jpg";
+                        break;
+                }
+            ?>" alt="Series Image"></a>
+                <?php } ?>
+            </div>
+            <button id="next-btn" class="next-btn">&#129086</button>
+        </div>
+    </div>
+</section>
     <section class="active-section">
     <h2>Aanbevolen</h2>
     <div class="container">
