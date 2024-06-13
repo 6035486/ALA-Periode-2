@@ -39,6 +39,7 @@ $imageSrc = "../images/";
         <img src="../images/HOBO_logo.png" alt="Logo">
         <article>  
             <a href="./home.php">Home</a>
+            <a href="search.php">Search</a>
             <a href="#">Contact</a>
             <a href="./profile.php">Profile</a>
             <a href="historie.php">History</a>

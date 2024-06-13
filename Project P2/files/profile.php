@@ -97,12 +97,58 @@ $genres = $genre->getAllGenres();
         </form>
     </div>
     <?php 
-        } // End of foreach loop
+        } 
     } else {
         echo "No profile data found.";
     }
     ?>
-   
+   <div class="privacy">
+        <h1>Privacy Policy</h1>
+
+        <h2>Introduction</h2>
+        <p>Welcome to HOBO. We value your privacy and are committed to protecting your personal data. This privacy policy will inform you about how we look after your personal data when you visit our website (regardless of where you visit it from) and tell you about your privacy rights and how the law protects you.</p>
+
+        <h2>Information We Collect</h2>
+        <p>We may collect and process the following data about you:</p>
+        <ul>
+            <li>Information you provide by filling in forms on our site.</li>
+            <li>Details of your visits to our site and the resources that you access.</li>
+            <li>Information about your computer, including your IP address, operating system, and browser type.</li>
+        </ul>
+
+        <h2>How We Use Your Information</h2>
+        <p>We use information held about you in the following ways:</p>
+        <ul>
+            <li>To ensure that content from our site is presented in the most effective manner for you and for your computer.</li>
+            <li>To provide you with information, products, or services that you request from us or which we feel may interest you.</li>
+            <li>To notify you about changes to our service.</li>
+        </ul>
+
+        <h2>Sharing Your Information</h2>
+        <p>We do not sell, trade, or otherwise transfer to outside parties your personally identifiable information. This does not include trusted third parties who assist us in operating our website, conducting our business, or servicing you, so long as those parties agree to keep this information confidential.</p>
+
+        <h2>Your Rights</h2>
+        <p>You have the right to:</p>
+        <ul>
+            <li>Request access to your personal data.</li>
+            <li>Request correction of the personal data that we hold about you.</li>
+            <li>Request erasure of your personal data.</li>
+            <li>Object to processing of your personal data.</li>
+            <li>Request the restriction of processing of your personal data.</li>
+            <li>Request the transfer of your personal data to another party.</li>
+        </ul>
+
+        <h2>Data Security</h2>
+        <p>We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorized way, altered, or disclosed. In addition, we limit access to your personal data to those employees, agents, contractors, and other third parties who have a business need to know.</p>
+
+        <h2>Changes to Our Privacy Policy</h2>
+        <p>We keep our privacy policy under regular review, and we will place any updates on this web page. This privacy policy was last updated on [Date].</p>
+
+        <h2>Contact Us</h2>
+        <p>If you have any questions about this privacy policy or our privacy practices, please contact us at:</p>
+        <p>Email: info@bedrijf.nl</p>
+        <p>Address: 1234 Adresstraat</p>
+    </div>
 
 </main>
 

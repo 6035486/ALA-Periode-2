@@ -30,7 +30,7 @@ $totalWatchTime = $stream->totalWatchTime($profileData[0]['KlantNr']);
             <a href="./uitlog.php">Logout</a>
         </article>
     </nav> 
-    <main>
+    <main class="history">
     <p class="profile__item"><strong>Total Watch Time:</strong> <?php echo $totalWatchTime; ?> minutes</p> 
 <div class="container">  
     <h2>Onlangs Bekeken:</h2>

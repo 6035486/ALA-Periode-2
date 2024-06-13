@@ -114,12 +114,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         foreach ($serieInfo as $info) {
                             ?>
                             <div class="episodes">
-                                <img src="../images/dummy.png" alt="Episode Image">
-                                <li><?php echo $info['AflTitel']; ?> - Duration: <?php echo $info['Duur']; ?></li>
-                                <p><?php echo $info['afleveringID']; ?></p>
-                                <form method="post">
+                                 <form method="post">
                                     <input type="hidden" name="afleveringId" value="<?php echo $info['afleveringID']; ?>">
-                                    <input type="submit" value="Watch">
+                                    <button type="submit">
+                                <img src="../images/dummy.png" alt="Episode Image">
+                                <li><?php echo $info['AflTitel']; ?> - Duration: <?php echo $info['Duur']; ?></li></button>
+                                
+                               
+                                    
                                 </form>
                             </div>
                             <?php
