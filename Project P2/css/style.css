@@ -230,6 +230,11 @@ nav article a {
 }
 .info .series-info .info-text p {
   margin: 5px 0;
+  color: #92d051;
+}
+.info .series-info .info-text a {
+  color: #92d051;
+  text-decoration: none;
 }
 .info .series-info .series-image {
   width: 300px;
@@ -245,6 +250,7 @@ nav article a {
   font-size: 1em;
   border: none;
   border-radius: 5px;
+  color: #92d051;
 }
 .info .seasons .season {
   margin-bottom: 20px;
@@ -255,18 +261,38 @@ nav article a {
   font-size: 2em;
   margin-bottom: 10px;
 }
-.info .seasons .season ul {
+.info .seasons .season .container {
+  display: flex;
+}
+.info .seasons .season .container .episodes-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  max-width: 100%;
+}
+.info .seasons .season .container ul {
   list-style-type: none;
   padding: 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  margin: 0;
 }
-.info .seasons .season ul li {
+.info .seasons .season .container li {
   padding: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
+  color: #92d051;
 }
-.info .seasons .season ul div {
-  margin: 1%;
+.info .seasons .season .container .episodes {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  margin-right: 10px;
+  padding: 10px;
+  background-color: #92d051;
+  text-align: center;
+  border-radius: 8px;
+  box-sizing: border-box;
 }
 
 body.home main .active-section h2, body.home main .non-active-section h2 {
@@ -572,4 +598,59 @@ body.admin .series article {
   margin-bottom: 5px;
   font-weight: bold;
   font-family: "Montserrat", sans-serif;
+}
+
+.history .profile__item {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.history p {
+  color: #92d051;
+  font-family: "Montserrat", sans-serif;
+}
+.history .container h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #92d051;
+  font-family: "Neutra Text Alt", sans-serif;
+}
+.history .container .episode-group {
+  margin-bottom: 30px;
+}
+.history .container .episode-group h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #92d051;
+  font-family: "Neutra Text Alt", sans-serif;
+}
+.history .container .episode-group .carousel-view {
+  display: flex;
+  align-items: center;
+}
+.history .container .episode-group .carousel-view .item-list {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  margin: 0 10px;
+}
+.history .container .episode-group .carousel-view .item-list .carousel-item {
+  flex: 0 0 auto;
+  width: 200px;
+  margin-right: 10px;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.history .container .episode-group .carousel-view .item-list .carousel-item img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+.history .container .episode-group .carousel-view .item-list .carousel-item p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+.history .container .episode-group .carousel-view .item-list .carousel-item p:first-of-type {
+  font-weight: bold;
 }/*# sourceMappingURL=style.css.map */

@@ -40,11 +40,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'], $_POST['passw
        
     </head>
     <body class="login">
-        <header>
-            <a href="../index.php">
-            <img class="logo" src="../images/HOBO_beeldmerk.png" alt=""></a>
-            <a  class="" href="signup.php">Signup</a>
-        </header>
+    <nav>
+<a href="../index.php">
+<img src="../images/HOBO_logo.png" alt="logo"></a>
+<article>
+    <a href="signup.php">Registreren</a>
+</article>
+</nav>
         <main>
             <h1>inloggen</h1>
             <form action="" method="post">

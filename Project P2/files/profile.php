@@ -148,6 +148,14 @@ $genres = $genre->getAllGenres();
         <p>If you have any questions about this privacy policy or our privacy practices, please contact us at:</p>
         <p>Email: info@bedrijf.nl</p>
         <p>Address: 1234 Adresstraat</p>
+        <form >
+        <div class="checkbox-container">
+                <input type="checkbox" id="privacy" name="privacy" required>
+                <label for="privacy" class="privacy-policy">
+                    Ik ga akkoord met het <a href="/privacy-policy">privacybeleid</a>.
+                </label>
+            </div>
+        </form>
     </div>
 
 </main>

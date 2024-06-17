@@ -12,15 +12,12 @@
     </script>
 </head>
 <body class="index">
-    <nav>
+    <nav class="indexNav">
 
         <img src="./images/HOBO_logo.png" alt="logo">
         <article>
             <a href="./files/login.php">Login</a>
             <a href="./files/signup.php">Registreren</a>
-            
-            
-
         </article>
     </nav>
     <main>
