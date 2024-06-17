@@ -28,6 +28,7 @@ $totalWatchTime = $stream->totalWatchTime($profileData[0]['KlantNr']);
             <a href="./profile.php">Profile</a>
             <a href="historie.php">history</a>
             <a href="./uitlog.php">Logout</a>
+            <a href="./search.php">Search</a>
         </article>
     </nav> 
     <main>

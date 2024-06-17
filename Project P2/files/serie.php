@@ -49,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="./profile.php">Profile</a>
             <a href="historie.php">History</a>
             <a href="./uitlog.php">Logout</a>
+            <a href="./search.php">Search</a>
         </article>
     </nav>  
     <main class="info">
