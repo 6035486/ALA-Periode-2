@@ -39,6 +39,7 @@ $imageSrc = "../images/";
         <img src="../images/HOBO_logo.png" alt="Logo">
         <article>  
             <a href="./home.php">Home</a>
+            <a href="search.php">Search</a>
             <a href="#">Contact</a>
             <a href="./profile.php">Profile</a>
             <a href="historie.php">History</a>
@@ -160,7 +161,7 @@ $imageSrc = "../images/";
             ?>" alt="Series Image"></a>
                 <?php } ?>
             </div>
-            <button id="next-btn" class="next-btn">&#129086</button>
+            <button id="next-btn" class="next-btn">&#129086;</button>
         </div>
     </div>
 </section>
@@ -197,20 +198,23 @@ $imageSrc = "../images/";
     </div>
 </footer>
 <script>
-   const prev = document.getElementById('prev-btn');
-const next = document.getElementById('next-btn');
-const list = document.getElementById('item-list');
-const itemWidth = 150;
-const padding = 10;
+        const prev = document.getElementById('prev-btn');
+        const next = document.getElementById('next-btn');
+        const list = document.getElementById('item-list');
+        const itemWidth = 150;
+        const padding = 10;
 
-prev.addEventListener('click', () => {
-    list.scrollLeft -= (itemWidth + padding);
-});
+        function scrollList(direction) {
+            if (direction === 'prev') {
+                list.scrollLeft -= (itemWidth + padding);
+            } else if (direction === 'next') {
+                list.scrollLeft += (itemWidth + padding);
+            }
+        }
 
-next.addEventListener('click', () => {
-    list.scrollLeft += (itemWidth + padding);
-});
-</script>
+        prev.addEventListener('click', () => scrollList('prev'));
+        next.addEventListener('click', () => scrollList('next'));
+    </script>
 </body>
 </html>
 

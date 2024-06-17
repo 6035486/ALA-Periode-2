@@ -6,14 +6,19 @@ class User extends dbConfig {
     }
 
     public function getKlantNrByEmail($email) {
+        try{
         $sql = "SELECT klantNr FROM klant WHERE Email = :email";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC)['klantNr'];
+        return $stmt->fetch(PDO::FETCH_ASSOC)['klantNr'];}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function checkPassword($email, $password) {
+        try{
         $sql = "SELECT * FROM klant WHERE email = ?";
         $stm = $this->conn->prepare($sql);
         $stm->execute([$email]);
@@ -21,18 +26,26 @@ class User extends dbConfig {
         if (password_verify($password, $selectedUser['password'])) {
             return $selectedUser;
         }
-        return false;
+        return false;}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function getProfile($email) {
+        try{
         $sql = "SELECT * FROM klant WHERE Email = :email";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function changeProfile() {
+        try{
         $sql = "UPDATE klant SET Voornaam = :voornaam, Achternaam = :achternaam, Email = :email, Genre = :genre WHERE Email = :email";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
@@ -41,18 +54,26 @@ class User extends dbConfig {
             ':email' => $_POST['Email'],
             ':genre' => $_POST['Genre'],
             ':email' => $_SESSION['email']
-        ]);
+        ]);}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function deleteAccount($email) {
+        try{
         $sql = "DELETE FROM klant WHERE email = :email";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
-        return $stmt->rowCount();
+        return $stmt->rowCount();}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function adminLogin($user, $password) {
+        try{
         $sql = "SELECT * FROM users WHERE username = :username";
         $stm = $this->conn->prepare($sql);
         $stm->execute(["username" => $user]);
@@ -61,10 +82,15 @@ class User extends dbConfig {
             return $selectedUser;
         } else {
             return false;
+        }}  catch (PDOException $e) {
+            return false;
         }
+        
+
     }
     
     public function register($data) {
+        try{
         $errors = [];
 
         if ($data['confirm_email'] !== $data['email']) {
@@ -119,14 +145,18 @@ class User extends dbConfig {
                 'errors' => $errors
             ];
         }
+    }catch (PDOException $e) {
+        return false;
     }
-}
+}}
 class Serie extends dbConfig{
+
     public function __construct() {
         $this->connect();
     }
 
     public function show($email) {
+        try{
         $user = new User();
         $klantNr = $user->getKlantNrByEmail($email);
 
@@ -155,10 +185,14 @@ class Serie extends dbConfig{
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':klantNr', $klantNr, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function getActiveSeries($email) {
+        try{
         $sql = "SELECT serie.*
                 FROM serie
                 INNER JOIN serie_genre ON serie.SerieID = serie_genre.SerieID
@@ -168,16 +202,24 @@ class Serie extends dbConfig{
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function getRandomSeries() {
+        try{
         $sql = "SELECT * FROM serie WHERE Actief = 1 ORDER BY RAND() LIMIT 20";
         $result = $this->conn->query($sql);
-        return $result->fetchAll(PDO::FETCH_ASSOC);
+        return $result->fetchAll(PDO::FETCH_ASSOC);}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function getSerieInfo($serieID, $SznID) {
+        try{
         $sql = "SELECT serie.*, 
                        seizoen.Rang AS sRang,
                        seizoen.SeizoenID, 
@@ -197,27 +239,39 @@ class Serie extends dbConfig{
         $stmt->bindParam(':serieID', $serieID, PDO::PARAM_INT);
         $stmt->bindParam(':SznID', $SznID, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function getSeason($seasonID, $serieID) {
+        try{
         $sql = "SELECT SeizoenID FROM seizoen WHERE Rang = :seasonID AND serieID = :serieID";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':seasonID', $seasonID, PDO::PARAM_INT);
         $stmt->bindParam(':serieID', $serieID, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function getRang($serieID) {
+        try{
         $sql = "SELECT Rang FROM seizoen WHERE serieID = :serieID";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':serieID', $serieID, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function search($search) {
+        try{
         $searchLike = "%" . $search . "%";
         $query = $this->conn->prepare("SELECT * FROM serie WHERE Actief = 1 AND SerieTitel LIKE :search LIMIT 50");
         $query->execute(["search" => $searchLike]);
@@ -225,10 +279,14 @@ class Serie extends dbConfig{
 
         usort($results, fn($a, $b) => levenshtein($search, $a["SerieTitel"]) <=> levenshtein($search, $b["SerieTitel"]));
 
-        return $results;
+        return $results;}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function adminSearch($search = false, $offset = 0) {
+        try{
         if ($search != false) {
             $searchLike = "%" . $search . "%";
             $offset = $offset * 30;
@@ -253,10 +311,14 @@ class Serie extends dbConfig{
 
         usort($results, fn($a, $b) => levenshtein($search, $a["SerieTitel"]) <=> levenshtein($search, $b["SerieTitel"]));
 
-        return $results;
+        return $results;}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function activateSerie($serieId) {
+        try{
         $serie = $this->getSerieById($serieId);
         if ($serie == false) {
             throw new Exception("No serie found where SerieId = " . $serieId, 2);
@@ -274,10 +336,13 @@ class Serie extends dbConfig{
                     throw new Exception("Failed to activate serie where SerieId = : " . $serieId, 3);
                 }
             }
+        }}catch (PDOException $e) {
+            return false;
         }
     }
 
     public function deactivateSerie($serieId) {
+        try{
         $serie = $this->getSerieById($serieId);
         if ($serie == false) {
             return new Error("No serie found where SerieId = " . $serieId, 2);
@@ -295,10 +360,13 @@ class Serie extends dbConfig{
                     return new Error("Failed to deactivate serie where SerieId = : " . $serieId, 3);
                 }
             }
+        }}catch (PDOException $e) {
+            return false;
         }
     }
 
     public function getSerieById($serieId) {
+        try{
         $sql = "SELECT * FROM serie WHERE SerieID = :id";
         $stm = $this->conn->prepare($sql);
         $stm->execute(['id' => $serieId]);
@@ -306,7 +374,10 @@ class Serie extends dbConfig{
         if (empty($result)) {
             return false;
         }
-        return $result;
+        return $result;}
+    catch (PDOException $e) {
+        return false;
+    }
     }
 }
 class Stream extends dbConfig{
@@ -314,6 +385,7 @@ class Stream extends dbConfig{
         $this->connect();
     }
     public function aanbevolen($klantID){
+        try{
         $sql = "SELECT DISTINCT seizoen.SerieID
         FROM stream
         INNER JOIN aflevering ON stream.AflID = aflevering.AfleveringID
@@ -323,11 +395,15 @@ class Stream extends dbConfig{
     $stmt = $this->conn->prepare($sql);
     $stmt->bindParam(':klantID', $klantID, PDO::PARAM_INT);
     $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);}
+    catch (PDOException $e) {
+    return false;
+}
 }
     
 
     public function watch($klantId, $aflId) {
+        try{
         $sql = "SELECT Duur FROM aflevering WHERE AfleveringID = :aflId";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':aflId', $aflId, PDO::PARAM_INT);
@@ -345,15 +421,22 @@ class Stream extends dbConfig{
         $stmt->bindParam(':aflId', $aflId, PDO::PARAM_INT);
         $einde = date('Y-m-d H:i:s', strtotime('+' . $duur . ' minutes'));
         $stmt->bindParam(':d_eind', $einde, PDO::PARAM_STR);
-        $stmt->execute();
+        $stmt->execute();}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function totalWatchTime($klantId) {
+        try{
         $sql = "SELECT SUM(TIMESTAMPDIFF(MINUTE, d_start, d_eind)) as total FROM stream WHERE KlantID = :klantId";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':klantId', $klantId, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 }
 class Genre extends dbConfig {
@@ -361,9 +444,13 @@ class Genre extends dbConfig {
         $this->connect();
     }
     public function getAllGenres() {
+        try{
         $sql = "SELECT GenreNaam FROM genre";
         $stm = $this->conn->prepare($sql);
         $stm->execute();    
-        return $stm->fetchAll(PDO::FETCH_COLUMN);
+        return $stm->fetchAll(PDO::FETCH_COLUMN);}
+        catch (PDOException $e) {
+            return false;
+        }
     }
 }

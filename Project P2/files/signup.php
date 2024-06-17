@@ -35,10 +35,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="login">
-    <header>
-            <img class="logo" src="../images/HOBO_beeldmerk.png" alt="">
-        <a class="gr" href="login.php">Login</a>
-    </header>
+<nav>
+<a href="../index.php">
+<img src="../images/HOBO_logo.png" alt="logo"></a>
+<article>
+    <a href="login.php">Login</a>
+</article>
+</nav>
     <main>
         <form action="" method="post">
             <section>

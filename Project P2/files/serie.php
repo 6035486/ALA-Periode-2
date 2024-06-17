@@ -45,18 +45,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <img src="../images/HOBO_logo.png" alt="Logo">
         <article>  
             <a href="./home.php">Home</a>
+            <a href="search.php">Search</a>
             <a href="#">Contact</a>
             <a href="./profile.php">Profile</a>
             <a href="historie.php">History</a>
             <a href="./uitlog.php">Logout</a>
             <a href="./search.php">Search</a>
         </article>
-    </nav>  
+    </nav>
     <main class="info">
         <div class="series-info">
             <div class="info-text">
                 <h2><?php echo $serieInfo[0]['SerieTitel']; ?></h2>
                 <p>Rating: <?php echo $serieInfo[0]['IMDBRating']; ?></p>
+                <p><?php echo $serieInfo[0]['infomatie'];?></p>
+                <a href="<?php echo $serieInfo[0]['IMDBLink']?>"><?php echo $serieInfo[0]['IMDBLink']?></a>
             </div>
             <img class="series-image" src="<?php
                 $serieIDLength = strlen($serieInfo[0]['SerieID']);
@@ -96,39 +99,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
             </div>
             <?php
-            foreach ($seasons as $seasonID) { ?>
-                <div class="season" id="season-<?php echo $seasonID; ?>">
-                    <h3>Season <?php echo $seasonID; ?></h3>
-                    <?php 
-                    $serieID = $_GET['id'];
-                    $xx = $serie->getSeason($seasonID, $serieID);
-                    foreach($xx as $x){
-                    $SznID = $x['SeizoenID']; }
-                    
-                    $serieID = $_GET['id'];
-                    $serieInfo = $serie->getSerieInfo($serieID, $SznID);?>
-                    
-                     
-                    <ul>
+    foreach ($seasons as $seasonID) { ?>
+        <div class="season" id="season-<?php echo $seasonID; ?>">
+            <h3>Season <?php echo $seasonID; ?></h3>
+            <?php 
+            $serieID = $_GET['id'];
+            $xx = $serie->getSeason($seasonID, $serieID);
+            foreach($xx as $x){
+                $SznID = $x['SeizoenID'];
+            }
 
+            $serieID = $_GET['id'];
+            $serieInfo = $serie->getSerieInfo($serieID, $SznID); ?>
+
+            <div class="container">
+                <button class="prev-btn">&#129084;</button>
+                <div class="episodes-container" id="episodes-container-<?php echo $seasonID; ?>">
+                    <ul>
                         <?php
-                        foreach ($serieInfo as $info) {
-                            ?>
+                        foreach ($serieInfo as $info) { ?>
                             <div class="episodes">
-                                <img src="../images/dummy.png" alt="Episode Image">
-                                <li><?php echo $info['AflTitel']; ?> - Duration: <?php echo $info['Duur']; ?></li>
-                                <p><?php echo $info['afleveringID']; ?></p>
                                 <form method="post">
                                     <input type="hidden" name="afleveringId" value="<?php echo $info['afleveringID']; ?>">
-                                    <input type="submit" value="Watch">
+                                    <button type="submit">
+                                        <img src="../images/dummy.png" alt="Episode Image">
+                                        <li><?php echo $info['AflTitel']; ?> - Duration: <?php echo $info['Duur']; ?></li>
+                                    </button>
                                 </form>
                             </div>
                             <?php
                         } ?>
                     </ul>
                 </div>
-            <?php }
-            ?>
+                <button class="next-btn">&#129086;</button>
+            </div>
+        </div>
+    <?php } ?>
         </div>
     </main>
     <script>
