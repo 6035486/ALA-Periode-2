@@ -426,6 +426,50 @@ class Stream extends dbConfig{
             return false;
         }
     }
+    public function serieWatched($klantId){
+        try{
+        $sql = "SELECT serie.SerieTitel,
+               SEC_TO_TIME(SUM(aflevering.duur)) AS total
+        FROM stream
+        RIGHT JOIN aflevering ON stream.AflID = aflevering.AfleveringID
+        RIGHT JOIN seizoen ON aflevering.SeizID = seizoen.SeizoenID
+        RIGHT JOIN serie ON seizoen.SerieID = serie.SerieID
+        WHERE stream.KlantID = :klantId
+        GROUP BY serie.SerieTitel;";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':klantId', $klantId, PDO::PARAM_INT);
+        $stmt->execute();
+
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+        }
+        catch (PDOException $e) {
+            return false;
+        }
+
+    }
+    public function daysWatched($klantId){
+        try{
+            $sql = "SELECT DATE(d_start) AS day,
+            SEC_TO_TIME(SUM(TIMESTAMPDIFF(SECOND, d_start, d_eind))) AS total_time
+            FROM stream
+            WHERE KlantID = :klantId
+            GROUP BY DATE(d_start)";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':klantId', $klantId, PDO::PARAM_INT);
+        $stmt->execute();
+
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+        }
+        catch (PDOException $e) {
+            return false;
+        }
+
+    }
 
     public function totalWatchTime($klantId) {
         try{

@@ -25,10 +25,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } catch (Exception $th) {
                 echo "Error: " . $th->getMessage();
             }
+            $serieID = $_GET['id'];
+            if ($serieID == 2) {
+        
+                
+                header("Location: trailer.php");
+                exit(); 
+            }
         }
     }
 }
-
+if(isset($_POST['link'])){
+    $redirectUrl = $serieInfo[0]['IMDBLink'];
+    header("Location: $redirectUrl");
+        exit();
+    
+}
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +70,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="info-text">
                 <h2><?php echo $serieInfo[0]['SerieTitel']; ?></h2>
                 <p>Rating: <?php echo $serieInfo[0]['IMDBRating']; ?></p>
-                <a href="<?php echo $serieInfo[0]['IMDBLink']?>"><?php echo $serieInfo[0]['IMDBLink']?></a>
+                <p><?php echo $serieInfo[0]['infomatie'];?></p>
+                <form method="post">
+                    <button type="submit" name="link">Meer Informatie</button>
+                </form>
+              
             </div>
             <img class="series-image" src="<?php
                 $serieIDLength = strlen($serieInfo[0]['SerieID']);
@@ -118,13 +134,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <?php
                         foreach ($serieInfo as $info) { ?>
                             <div class="episodes">
-                                <form method="post">
-                                    <input type="hidden" name="afleveringId" value="<?php echo $info['afleveringID']; ?>">
-                                    <button type="submit">
-                                        <img src="../images/dummy.png" alt="Episode Image">
-                                        <li><?php echo $info['AflTitel']; ?> - Duration: <?php echo $info['Duur']; ?></li>
-                                    </button>
-                                </form>
+                            <form method="post">
+                              <input type="hidden" name="afleveringId" value="<?php echo $info['afleveringID']; ?>">
+                                <button type="submit">
+                                <img src="../images/dummy.png" alt="Episode Image">
+                            <li><?php echo $info['AflTitel']; ?> - Duration: <?php echo $info['Duur']; ?></li>
+                            </button>
+</form>
                             </div>
                             <?php
                         } ?>
@@ -137,6 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </main>
     <script>
+   
         function navigateToSeason(selectElement) {
             var seasonId = selectElement.value;
             document.querySelectorAll('.season').forEach(function(season) {
