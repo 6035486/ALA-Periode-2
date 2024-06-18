@@ -30,6 +30,7 @@ if (isset($_POST['search'])) {
 <body class="admin">
     <header>
         <h1>Hobo CMS</h1>
+        <a href="klantbeheer.php">klanten beheer</a>
     </header>
     <main>
         <section class="search">

@@ -58,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="info-text">
                 <h2><?php echo $serieInfo[0]['SerieTitel']; ?></h2>
                 <p>Rating: <?php echo $serieInfo[0]['IMDBRating']; ?></p>
-                <p><?php echo $serieInfo[0]['infomatie'];?></p>
                 <a href="<?php echo $serieInfo[0]['IMDBLink']?>"><?php echo $serieInfo[0]['IMDBLink']?></a>
             </div>
             <img class="series-image" src="<?php

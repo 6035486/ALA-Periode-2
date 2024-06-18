@@ -290,7 +290,7 @@ class Serie extends dbConfig{
         if ($search != false) {
             $searchLike = "%" . $search . "%";
             $offset = $offset * 30;
-            $query = $this->conn->prepare("SELECT serie.*
+            $query = $this->conn->prepare("SELECT *
             FROM serie
             INNER JOIN serie_genre ON serie.SerieID = serie_genre.SerieID
             INNER JOIN genre ON serie_genre.GenreID = genre.GenreID
