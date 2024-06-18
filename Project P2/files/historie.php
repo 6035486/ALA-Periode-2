@@ -3,12 +3,15 @@ require_once('../helpers/helpers.php');
 
 session_start(); 
 $email = $_SESSION['email'];
+$klantId = $_SESSION['klantNr'];
 $user = new User();
 $serie = new Serie();
 $episodes = $serie->show($email);
 $stream = new Stream();
 $profileData = $user->getProfile($email);
 $totalWatchTime = $stream->totalWatchTime($profileData[0]['KlantNr']);
+$days = $stream->daysWatched($klantId);
+$seriesWatched = $stream->serieWatched($klantId);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,9 +34,24 @@ $totalWatchTime = $stream->totalWatchTime($profileData[0]['KlantNr']);
         </article>
     </nav> 
     <main class="history">
-    <p class="profile__item"><strong>Total Watch Time:</strong> <?php echo $totalWatchTime; ?> minutes</p> 
+         <p class="profile__item"><strong>Total Watch Time:</strong> <?php echo $totalWatchTime; ?> minutes</p> 
+        <section class="statistiek">
+            <article>
+   
+    <h2>Dagen gekeken:</h2>
+    <?php foreach($days as $day) { ?> 
+        <p><?php echo $day['day']; ?>: <?php echo $day['total_time'] ; ?> </p>
+        <?php }?>
+    </article>
+<article>
+    <h2>Series gekeken:</h2>
+<?php foreach($seriesWatched as $serieW) { ?> 
+        <p><?php echo $serieW['SerieTitel']; ?>: <?php echo $serieW['total'] ; ?> </p>
+        <?php }?>
+</article>
+</section>
 <div class="container">  
-    <h2>Onlangs Bekeken:</h2>
+    <h2>Aflevering Bekeken:</h2>
     <?php foreach($episodes as $episode): ?>
         <div class="episode-group">
             <h3><?php echo $episode['SerieTitel']; ?></h3>

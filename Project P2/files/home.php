@@ -50,15 +50,21 @@ $imageSrc = "../images/";
     
     <main class="homepage">
    
-        <section class="frontserie">
-            <article class="witcher">
-                <h1>Witcher</h1>
+    <section class="frontserie">
+        <article class="witcher">
+            <div class="content">
+                <h1>The Witcher</h1>
                 <p>In de mystieke wereld van The Witcher liggen monsters op de loer, en Geralt van Rivia, een eenzame en legendarische monsterjager, vecht met ongekende kracht tegen het kwaad. Terwijl hij door gevaarlijke landschappen reist, ontdekt hij dat de grens tussen goed en kwaad vaak vervaagt. Beleef de magie, actie en intriges in dit epische avontuur waar niets is wat het lijkt.</p>
-                <button>Afspelen</button></article>
-                <article class="img-container">
-                <img src="../images/witcher.jpg" alt="Witcher"></article>
-            </article>
-        </section>
+                <button id="showVideoBtn">Show Trailer</button>
+            </div>
+            <div class="img-container">
+                <img src="../images/witcher.jpg" alt="Witcher">
+                <div id="videoContainer" class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/kr3br-3i8TY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </article>
+    </section>
        
         <section class="active-section">
     <h2>Kijk verder</h2>
@@ -198,6 +204,12 @@ $imageSrc = "../images/";
     </div>
 </footer>
 <script>
+        document.getElementById('showVideoBtn').addEventListener('click', function() {
+            var videoContainer = document.getElementById('videoContainer');
+            videoContainer.classList.toggle('show');
+        });
+
+
         const prev = document.getElementById('prev-btn');
         const next = document.getElementById('next-btn');
         const list = document.getElementById('item-list');
