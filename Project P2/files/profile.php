@@ -55,6 +55,7 @@ $genres = $genre->getAllGenres();
             <a href="./profile.php">Profile</a>
             <a href="historie.php">History</a>
             <a href="./uitlog.php">Logout</a>
+            <a href="./search.php">Search</a>
         </article>
     </nav>  
     <main class="profile">

@@ -22,6 +22,8 @@ $imageSrc = "../images/"
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="search">
+      
+    </nav>
     <header>
         <img class="logo" src="../images/HOBO_beeldmerk.png" alt="">
         
@@ -29,7 +31,17 @@ $imageSrc = "../images/"
             <input type="text" name="query" id="">
             <input type="submit" value="search">
         </form>
-        <a class="" href="home.php">Home</a>
+        <article>  
+            <a href="./home.php">Home</a>
+            <a href="#">Contact</a>
+            <a href="./profile.php">Profile</a>
+            <a href="historie.php">History</a>
+            <a href="./uitlog.php">Logout</a>
+            <a href="./search.php">Search</a>
+        </article>
+        <nav>
+    
+    
     </header>
     <main>
         <section>

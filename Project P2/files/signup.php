@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $user->register($_POST);
 
     if ($result['success']) {
+        $_SESSION['email'] = $result['email'];
         $_SESSION['loggedin'] = true;
         $_SESSION['user_id'] = $result['user_id'];
         header("Location: home.php");
